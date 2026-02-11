@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>虚空观测站 · Void Observatory</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0a0a0f;
+  --bg-card: #111118;
+  --bg-card-hover: #1a1a25;
+  --gold: #c9a84c;
+  --gold-dim: #8a7234;
+  --gold-glow: #c9a84c44;
+  --purple: #7b5ea7;
+  --purple-dim: #4a3566;
+  --cyan: #5e9ca0;
+  --text-primary: #e8e4dc;
+  --text-secondary: #9a958b;
+  --text-dim: #5a5650;
+  --border: #2a2a35;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'Noto Sans SC', sans-serif;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--bg-deep);
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+
+/* ---- Sacred Geometry Background ---- */
+.sacred-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.04;
+}
+
+.sacred-bg svg {
+  width: 100%; height: 100%;
+}
+
+/* ---- Floating Particles ---- */
+.particles {
+  position: fixed;
+  top:0;left:0;width:100%;height:100%;
+  pointer-events:none;
+  z-index:1;
+}
+
+.particle {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+  opacity: 0;
+}
+
+@keyframes floatUp {
+  0% { opacity:0; transform: translateY(0) scale(1); }
+  10% { opacity:0.8; }
+  90% { opacity:0.2; }
+  100% { opacity:0; transform: translateY(-100vh) scale(0.3); }
+}
+
+/* ---- Nav ---- */
+nav {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  z-index: 100;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0) 100%);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s;
+}
+
+nav.scrolled {
+  background: rgba(10,10,15,0.95);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-logo .eye {
+  display: inline-block;
+  width: 28px; height: 28px;
+  animation: slowSpin 20s linear infinite;
+}
+
+@keyframes slowSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+
+.menu-toggle {
+  display: none;
+  background: none; border: none;
+  color: var(--gold);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* ---- Hero ---- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  z-index: 2;
+}
+
+.hero-geometry {
+  position: absolute;
+  width: 450px; height: 450px;
+  opacity: 0.12;
+  animation: slowSpin 60s linear infinite;
+}
+
+.hero-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: 6px;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.hero-title .accent {
+  color: var(--gold);
+  text-shadow: 0 0 40px var(--gold-glow);
+}
+
+.hero-subtitle {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--text-secondary);
+  letter-spacing: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 300;
+}
+
+.hero-line {
+  width: 60px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 1.5rem auto;
+}
+
+.hero-quote {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1rem;
+  color: var(--text-dim);
+  font-style: italic;
+  max-width: 500px;
+  margin-top: 1rem;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.scroll-hint .line {
+  width: 1px; height: 40px;
+  background: linear-gradient(180deg, var(--gold-dim), transparent);
+}
+
+@keyframes breathe {
+  0%,100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* ---- Section Common ---- */
+section {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  padding: 0.3rem 1rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 1rem;
+}
+
+.section-desc {
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+}
+
+/* ---- Tag Filter ---- */
+.tag-filter {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 3rem;
+}
+
+.tag-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Noto Sans SC', sans-serif;
+  letter-spacing: 1px;
+}
+
+.tag-btn:hover, .tag-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,168,76,0.05);
+}
+
+/* ---- Article Cards ---- */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.article-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.article-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.article-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--gold-dim);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px var(--gold-glow);
+}
+
+.article-card:hover::before { opacity: 1; }
+
+.article-number {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 1rem;
+  transition: color 0.4s;
+}
+
+.article-card:hover .article-number {
+  color: var(--gold-dim);
+}
+
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.article-tag {
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid;
+  line-height: 1.6;
+}
+
+.tag-nde { color: #7bafd4; border-color: #7bafd433; }
+.tag-crop { color: #8bc98b; border-color: #8bc98b33; }
+.tag-consciousness { color: #c9a84c; border-color: #c9a84c33; }
+.tag-philosophy { color: #b07baf; border-color: #b07baf33; }
+.tag-physics { color: #d4917b; border-color: #d4917b33; }
+.tag-meditation { color: #7bc9c0; border-color: #7bc9c033; }
+
+.article-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+  letter-spacing: 1px;
+}
+
+.article-excerpt {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+.article-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.article-read {
+  color: var(--gold-dim);
+  text-decoration: none;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.article-card:hover .article-read { color: var(--gold); }
+
+/* ---- Featured Article ---- */
+.featured {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 3rem;
+  margin-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.featured::after {
+  content: '';
+  position: absolute;
+  top: -50%; right: -20%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.featured-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.featured-label .dot {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 0 0 var(--gold-glow); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 8px transparent; }
+}
+
+.featured .article-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: 1rem;
+}
+
+.featured .article-excerpt {
+  font-size: 1rem;
+  max-width: 700px;
+}
+
+/* ---- Article Detail (Modal) ---- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(20px);
+  z-index: 200;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.modal-overlay.open { display: block; }
+
+.modal-content {
+  max-width: 750px;
+  margin: 4rem auto;
+  animation: fadeUp 0.5s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-close {
+  position: fixed;
+  top: 2rem; right: 2rem;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  width: 44px; height: 44px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  z-index: 201;
+}
+
+.modal-close:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.modal-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header .article-tags { margin-bottom: 1rem; }
+
+.modal-header .article-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: 1rem;
+}
+
+.modal-header .article-meta {
+  font-size: 0.8rem;
+}
+
+.modal-body {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 1.05rem;
+  line-height: 2.2;
+  color: var(--text-primary);
+}
+
+.modal-body h2 {
+  font-size: 1.4rem;
+  color: var(--gold);
+  margin: 2.5rem 0 1rem;
+  letter-spacing: 2px;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.modal-body h2::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.2rem;
+  width: 3px; height: 100%;
+  background: var(--gold);
+}
+
+.modal-body p {
+  margin-bottom: 1.5rem;
+  color: #c8c4bb;
+}
+
+.modal-body blockquote {
+  border-left: 2px solid var(--gold-dim);
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  background: rgba(201,168,76,0.03);
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.modal-body .highlight {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ---- About Section ---- */
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.about-text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 2;
+}
+
+.about-text p { margin-bottom: 1.5rem; }
+
+.about-sigil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.about-sigil svg {
+  width: 280px; height: 280px;
+  opacity: 0.2;
+  animation: slowSpin 40s linear infinite;
+}
+
+.about-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.about-link:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ---- Footer ---- */
+footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+}
+
+footer .footer-symbol {
+  font-size: 1.5rem;
+  color: var(--gold-dim);
+  margin-bottom: 1rem;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%; left: 0;
+    width: 100%;
+    background: rgba(10,10,15,0.98);
+    padding: 2rem;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .menu-toggle { display: block; }
+  .hero-geometry { width: 280px; height: 280px; }
+  .articles-grid { grid-template-columns: 1fr; }
+  .about-content { grid-template-columns: 1fr; }
+  .about-sigil { display: none; }
+  .featured { padding: 2rem; }
+  .modal-content { margin: 2rem auto; }
+  .modal-close { top: 1rem; right: 1rem; }
+}
+
+/* ---- Fade-in on scroll ---- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- Sacred Geometry Background -->
+<div class="sacred-bg">
+<svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <circle cx="40" cy="40" r="38" fill="none" stroke="#c9a84c" stroke-width="0.3"/>
+      <line x1="0" y1="40" x2="80" y2="40" stroke="#c9a84c" stroke-width="0.15"/>
+      <line x1="40" y1="0" x2="40" y2="80" stroke="#c9a84c" stroke-width="0.15"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+</svg>
+</div>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Navigation -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <svg class="eye" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="18" stroke="#c9a84c" stroke-width="0.8"/>
+      <circle cx="20" cy="20" r="10" stroke="#c9a84c" stroke-width="0.5"/>
+      <circle cx="20" cy="20" r="3" fill="#c9a84c"/>
+      <line x1="20" y1="2" x2="20" y2="38" stroke="#c9a84c" stroke-width="0.3"/>
+      <line x1="2" y1="20" x2="38" y2="20" stroke="#c9a84c" stroke-width="0.3"/>
+    </svg>
+    虚空观测站
+  </a>
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#articles" onclick="closeMenu()">文章</a></li>
+    <li><a href="#about" onclick="closeMenu()">关于</a></li>
+    <li><a href="#" onclick="closeMenu()">归档</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <svg class="hero-geometry" viewBox="0 0 400 400" fill="none">
+    <circle cx="200" cy="200" r="180" stroke="#c9a84c" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="130" stroke="#c9a84c" stroke-width="0.4"/>
+    <circle cx="200" cy="200" r="80" stroke="#c9a84c" stroke-width="0.3"/>
+    <circle cx="200" cy="200" r="30" stroke="#c9a84c" stroke-width="0.3"/>
+    <polygon points="200,20 370,290 30,290" stroke="#c9a84c" stroke-width="0.4" fill="none"/>
+    <polygon points="200,380 30,110 370,110" stroke="#c9a84c" stroke-width="0.4" fill="none"/>
+    <line x1="200" y1="0" x2="200" y2="400" stroke="#c9a84c" stroke-width="0.2"/>
+    <line x1="0" y1="200" x2="400" y2="200" stroke="#c9a84c" stroke-width="0.2"/>
+    <line x1="30" y1="30" x2="370" y2="370" stroke="#c9a84c" stroke-width="0.2"/>
+    <line x1="370" y1="30" x2="30" y2="370" stroke="#c9a84c" stroke-width="0.2"/>
+  </svg>
+
+  <div class="hero-subtitle">VOID OBSERVATORY</div>
+  <h1 class="hero-title">虚<span class="accent">空</span>观测站</h1>
+  <div class="hero-line"></div>
+  <p class="hero-subtitle" style="letter-spacing:2px; font-size:0.88rem;">实证主义玄学 · 意识边界探索 · 非教条思辨</p>
+  <p class="hero-quote">「万物皆有裂痕，那是光照进来的地方。」</p>
+
+  <div class="scroll-hint">
+    <span>SCROLL</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- Articles Section -->
+<section id="articles">
+  <div class="section-header fade-in">
+    <div class="section-tag">Archives</div>
+    <h2 class="section-title">思 考 档 案</h2>
+    <p class="section-desc">在理性与未知之间，寻找那些被忽视的证据链条。</p>
+  </div>
+
+  <!-- Tag Filter -->
+  <div class="tag-filter fade-in">
+    <button class="tag-btn active" onclick="filterArticles('all')">全部</button>
+    <button class="tag-btn" onclick="filterArticles('nde')"># 濒死体验</button>
+    <button class="tag-btn" onclick="filterArticles('crop')"># 麦田圈</button>
+    <button class="tag-btn" onclick="filterArticles('consciousness')"># 意识研究</button>
+    <button class="tag-btn" onclick="filterArticles('philosophy')"># 存在哲学</button>
+    <button class="tag-btn" onclick="filterArticles('physics')"># 量子迷思</button>
+    <button class="tag-btn" onclick="filterArticles('meditation')"># 冥想实证</button>
+  </div>
+
+  <!-- Featured -->
+  <div class="featured fade-in" onclick="openArticle(0)">
+    <div class="featured-label">
+      <span class="dot"></span>
+      置顶文章
+    </div>
+    <div class="article-tags">
+      <span class="article-tag tag-nde"># 濒死体验</span>
+      <span class="article-tag tag-consciousness"># 意识研究</span>
+    </div>
+    <h3 class="article-title">当意识脱离肉身：NDE 研究三十年的实证积累与认识论困境</h3>
+    <p class="article-excerpt">从 Pim van Lommel 的前瞻性研究到 AWARE 实验，我们手中已经握有大量无法被「缺氧幻觉」解释的反常数据。问题从来不是证据够不够，而是我们的范式能不能容纳它。</p>
+    <div class="article-meta">
+      <span>2025.12.14 · 阅读约 18 分钟</span>
+      <span class="article-read">阅读全文 →</span>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="articles-grid">
+
+    <div class="article-card fade-in" data-tags="crop" onclick="openArticle(1)">
+      <div class="article-number">02</div>
+      <div class="article-tags">
+        <span class="article-tag tag-crop"># 麦田圈</span>
+        <span class="article-tag tag-physics"># 量子迷思</span>
+      </div>
+      <h3 class="article-title">麦田圈的节点膨胀：一种无法被踩踏复制的物理痕迹</h3>
+      <p class="article-excerpt">BLT 研究团队在实验室中发现的茎秆节点膨胀、泥土结晶变化和种子发芽率异常，为什么主流科学选择性忽视了这些可重复验证的物证？</p>
+      <div class="article-meta">
+        <span>2025.11.28</span>
+        <span class="article-read">→</span>
+      </div>
+    </div>
+
+    <div class="article-card fade-in" data-tags="consciousness philosophy" onclick="openArticle(2)">
+      <div class="article-number">03</div>
+      <div class="article-tags">
+        <span class="article-tag tag-consciousness"># 意识研究</span>
+        <span class="article-tag tag-philosophy"># 存在哲学</span>
+      </div>
+      <h3 class="article-title">唯物主义的困难问题：意识为什么不应该存在？</h3>
+      <p class="article-excerpt">David Chalmers 提出的 "hard problem" 至今未被任何物理主义框架解决。如果意识只是神经元放电的副产品，为什么它有主观体验的质感？</p>
+      <div class="article-meta">
+        <span>2025.11.15</span>
+        <span class="article-read">→</span>
+      </div>
+    </div>
+
+    <div class="article-card fade-in" data-tags="nde" onclick="openArticle(3)">
+      <div class="article-number">04</div>
+      <div class="article-tags">
+        <span class="article-tag tag-nde"># 濒死体验</span>
+      </div>
+      <h3 class="article-title">盲人看见了什么：先天失明者 NDE 中的视觉报告</h3>
+      <p class="article-excerpt">Kenneth Ring 记录的先天失明者在濒死体验中首次获得「视觉」经验的案例，对「大脑产生意识」的假说构成了什么挑战？</p>
+      <div class="article-meta">
+        <span>2025.10.22</span>
+        <span class="article-read">→</span>
+      </div>
+    </div>
+
+    <div class="article-card fade-in" data-tags="crop" onclick="openArticle(4)">
+      <div class="article-number">05</div>
+      <div class="article-tags">
+        <span class="article-tag tag-crop"># 麦田圈</span>
+      </div>
+      <h3 class="article-ti
