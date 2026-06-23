@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>神秘学与科学之眼 | 主页</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080a12;
+      --text: #f8fafc;
+      --muted: #b9c1d3;
+      --gold: #f0c75e;
+      --gold-deep: #b8861f;
+      --teal: #42d5c8;
+      --violet: #a78bfa;
+      --rose: #fb7185;
+      --green: #74d68d;
+      --blue: #60a5fa;
+      --line: rgba(240, 199, 94, 0.28);
+      --shadow: rgba(0, 0, 0, 0.44);
+      --stage-size: 38rem;
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
+      letter-spacing: 0;
+      background:
+        linear-gradient(135deg, rgba(8, 10, 18, 0.96), rgba(11, 22, 31, 0.92) 43%, rgba(24, 14, 22, 0.98)),
+        repeating-linear-gradient(90deg, rgba(66, 213, 200, 0.055) 0 1px, transparent 1px 92px),
+        repeating-linear-gradient(0deg, rgba(240, 199, 94, 0.04) 0 1px, transparent 1px 92px);
+      font-family: var(--font, "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(120deg, rgba(66, 213, 200, 0.12), transparent 28%),
+        linear-gradient(300deg, rgba(251, 113, 133, 0.1), transparent 30%),
+        linear-gradient(180deg, rgba(240, 199, 94, 0.08), transparent 48%);
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.86), transparent 88%);
+      z-index: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 2;
+      width: min(58rem, 100%);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 2.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.3rem;
+    }
+
+    .ambient-layer,
+    .word-layer {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .star-particle {
+      position: absolute;
+      border-radius: 999px;
+      background: var(--particle-color, var(--gold));
+      box-shadow: 0 0 12px currentColor;
+      animation: starTwinkle var(--twinkle-dur) ease-in-out infinite;
+      animation-delay: var(--twinkle-delay);
+      opacity: 0.34;
+    }
+
+    .float-word {
+      position: absolute;
+      bottom: -4rem;
+      color: rgba(248, 250, 252, 0.35);
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-shadow: 0 0 18px rgba(240, 199, 94, 0.26);
+      animation: floatWord var(--float-dur) linear infinite;
+      animation-delay: var(--float-delay);
+      opacity: 0;
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+
+    .site-hero {
+      max-width: 42rem;
+      display: grid;
+      gap: 0.75rem;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.8rem;
+      line-height: 1.08;
+      font-weight: 900;
+    }
+
+    .lead {
+      max-width: 38rem;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.75;
+    }
+
+    .navigator {
+      display: grid;
+      grid-template-columns: minmax(0, var(--stage-size));
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .stage-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+    }
+
+    .stage {
+      position: relative;
+      width: min(var(--stage-size), calc(100vw - 2.5rem));
+      aspect-ratio: 1;
+      isolation: isolate;
+    }
+
+    .stage::before,
+    .stage::after {
+      content: "";
+      position: absolute;
+      inset: 4%;
+      border: 1px solid rgba(240, 199, 94, 0.18);
+      border-radius: 999px;
+      animation: haloRotate 34s linear infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .stage::after {
+      inset: 13%;
+      border-color: rgba(66, 213, 200, 0.18);
+      animation-duration: 25s;
+      animation-direction: reverse;
+    }
+
+    .stage-aura {
+      position: absolute;
+      inset: 18%;
+      border: 1px solid rgba(251, 113, 133, 0.16);
+      border-radius: 999px;
+      animation: haloRotate 18s linear infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .sigil {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      filter: drop-shadow(0 1.1rem 2.5rem var(--shadow));
+    }
+
+    .triangle-line {
+      animation: lineGlow 4.5s ease-in-out infinite;
+    }
+
+    .inner-line {
+      animation: innerGlow 5s ease-in-out infinite;
+    }
+
+    .inner-line:nth-of-type(3) {
+      animation-delay: -1.6s;
+    }
+
+    .inner-line:nth-of-type(4) {
+      animation-delay: -3.1s;
+    }
+
+    .geometry-circle {
+      fill: none;
+      stroke-width: 0.28;
+      stroke-linecap: round;
+      stroke-opacity: 0.34;
+      animation: geometryBreathe 6s ease-in-out infinite;
+    }
+
+    .geometry-circle:nth-of-type(2n) {
+      animation-delay: -2.4s;
+    }
+
+    .geometry-line {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-opacity: 0.42;
+      animation: innerGlow 5.6s ease-in-out infinite;
+    }
+
+    .vertex-dot,
+    .center-dot {
+      animation: dotPulse 3.4s ease-in-out infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .center-dot {
+      animation-duration: 2.8s;
+    }
+
+    .node {
+      position: absolute;
+      z-index: 5;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.62rem;
+      min-height: 3rem;
+      max-width: 13rem;
+      padding: 0.68rem 0.92rem;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(15, 20, 34, 0.88), rgba(30, 26, 30, 0.75));
+      box-shadow:
+        0 1.1rem 2.5rem rgba(0, 0, 0, 0.28),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .node:hover,
+    .node:focus-visible {
+      border-color: rgba(240, 199, 94, 0.74);
+      background: linear-gradient(135deg, rgba(29, 34, 50, 0.95), rgba(42, 34, 41, 0.9));
+      box-shadow:
+        0 1.5rem 3rem rgba(0, 0, 0, 0.38),
+        0 0 1.7rem rgba(240, 199, 94, 0.22);
+      outline: none;
+    }
+
+    .node:hover {
+      transform: translate(-50%, -50%) scale(1.04);
+    }
+
+    .node-label {
+      display: grid;
+      gap: 0.08rem;
+      min-width: 0;
+    }
+
+    .node-title {
+      display: block;
+      overflow-wrap: anywhere;
+      font-size: 1rem;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .node-mark {
+      flex: 0 0 auto;
+      width: 0.72rem;
+      height: 0.72rem;
+      border-radius: 50%;
+      background: var(--mark, var(--gold));
+      box-shadow: 0 0 1rem var(--mark, var(--gold));
+    }
+
+    .node-top {
+      top: 15%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      --mark: var(--teal);
+    }
+
+    .node-left {
+      top: 80%;
+      left: 15%;
+      transform: translate(-50%, -50%);
+      --mark: var(--violet);
+    }
+
+    .node-right {
+      top: 80%;
+      left: 85%;
+      transform: translate(-50%, -50%);
+      --mark: var(--green);
+    }
+
+    .node-center {
+      top: 58%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-height: 3.25rem;
+      padding: 0.78rem 1.15rem;
+      border-color: rgba(240, 199, 94, 0.58);
+      background: linear-gradient(135deg, rgba(184, 134, 31, 0.94), rgba(39, 151, 145, 0.8), rgba(168, 85, 247, 0.72));
+      box-shadow:
+        0 0 2rem rgba(240, 199, 94, 0.34),
+        0 1.4rem 3rem rgba(0, 0, 0, 0.38);
+    }
+
+    .node-center .node-title {
+      font-size: 1.08rem;
+    }
+
+    @keyframes haloRotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes lineGlow {
+      0%, 100% {
+        stroke-opacity: 0.48;
+        stroke-width: 0.44;
+      }
+      50% {
+        stroke-opacity: 1;
+        stroke-width: 0.76;
+      }
+    }
+
+    @keyframes innerGlow {
+      0%, 100% {
+        stroke-opacity: 0.26;
+      }
+      50% {
+        stroke-opacity: 0.72;
+      }
+    }
+
+    @keyframes geometryBreathe {
+      0%, 100% {
+        stroke-opacity: 0.22;
+      }
+      50% {
+        stroke-opacity: 0.58;
+      }
+    }
+
+    @keyframes dotPulse {
+      0%, 100% {
+        opacity: 0.62;
+        transform: scale(0.9);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.22);
+      }
+    }
+
+    @keyframes starTwinkle {
+      0%, 100% {
+        transform: scale(0.75);
+        opacity: 0.18;
+      }
+      50% {
+        transform: scale(1.32);
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes floatWord {
+      0% {
+        transform: translateY(8vh) rotate(0deg);
+        opacity: 0;
+      }
+      12%, 84% {
+        opacity: var(--word-opacity);
+      }
+      100% {
+        transform: translateY(-112vh) rotate(18deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --stage-size: 31rem;
+      }
+
+      .page-shell {
+        justify-content: flex-start;
+        padding-top: 2rem;
+      }
+
+      .navigator {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --stage-size: 21.5rem;
+      }
+
+      .page-shell {
+        padding: 1.25rem 0.95rem 1.5rem;
+        gap: 1.25rem;
+      }
+
+      .site-hero {
+        gap: 0.55rem;
+      }
+
+      h1 {
+        font-size: 1.95rem;
+        line-height: 1.15;
+      }
+
+      .lead {
+        font-size: 0.93rem;
+        line-height: 1.65;
+      }
+
+      .stage {
+        width: min(var(--stage-size), calc(100vw - 1.9rem));
+      }
+
+      .node {
+        gap: 0.44rem;
+        min-height: 2.85rem;
+        max-width: 8.8rem;
+        padding: 0.58rem 0.68rem;
+      }
+
+      .node-title {
+        font-size: 0.88rem;
+      }
+
+      .node-mark {
+        width: 0.58rem;
+        height: 0.58rem;
+      }
+
+      .node-top {
+        top: 13.5%;
+      }
+
+      .node-left {
+        top: 81%;
+        left: 22%;
+      }
+
+      .node-right {
+        top: 81%;
+        left: 78%;
+      }
+
+      .node-center {
+        top: 58%;
+        max-width: 8.3rem;
+        min-height: 3rem;
+        padding: 0.62rem 0.8rem;
+      }
+
+      .node-center .node-title {
+        font-size: 0.96rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="star-bg-container" class="ambient-layer" aria-hidden="true"></div>
+  <div id="word-bg-container" class="word-layer" aria-hidden="true"></div>
+
+  <main class="page-shell">
+    <header class="site-hero">
+      <h1>神秘学与科学之眼</h1>
+      <p class="lead">从科学家的宇宙观、意识研究与未知现象进入同一个问题：人类怎样理解看不见的世界。</p>
+    </header>
+
+    <section class="navigator" aria-label="主要入口">
+      <div class="stage-wrap">
+        <div class="stage">
+          <span class="stage-aura" aria-hidden="true"></span>
+          <svg class="sigil" viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <filter id="goldGlow" x="-35%" y="-35%" width="170%" height="170%">
+                <feGaussianBlur stdDeviation="0.9" result="blur1"></feGaussianBlur>
+                <feGaussianBlur stdDeviation="2.3" result="blur2"></feGaussianBlur>
+                <feMerge>
+                  <feMergeNode in="blur2"></feMergeNode>
+                  <feMergeNode in="blur1"></feMergeNode>
+                  <feMergeNode in="SourceGraphic"></feMergeNode>
+                </feMerge>
+              </filter>
+              <linearGradient id="triangleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0" stop-color="#42d5c8"></stop>
+                <stop offset="0.48" stop-color="#f0c75e"></stop>
+                <stop offset="1" stop-color="#fb7185"></stop>
+              </linearGradient>
+            </defs>
+
+            <g opacity="0.9">
+              <circle class="geometry-circle" cx="50" cy="58" r="18" stroke="#f0c75e"></circle>
+              <circle class="geometry-circle" cx="50" cy="40" r="18" stroke="#42d5c8"></circle>
+              <circle class="geometry-circle" cx="50" cy="76" r="18" stroke="#fb7185"></circle>
+              <circle class="geometry-circle" cx="34.4" cy="49" r="18" stroke="#a78bfa"></circle>
+              <circle class="geometry-circle" cx="65.6" cy="49" r="18" stroke="#74d68d"></circle>
+              <circle class="geometry-circle" cx="34.4" cy="67" r="18" stroke="#f0c75e"></circle>
+              <circle class="geometry-circle" cx="65.6" cy="67" r="18" stroke="#42d5c8"></circle>
+              <polygon class="geometry-line" points="50,26 75,43 75,73 50,90 25,73 25,43" stroke="#f0c75e" stroke-width="0.34"></polygon>
+              <polygon class="geometry-line" points="50,25 25,73 75,73" stroke="#42d5c8" stroke-width="0.32"></polygon>
+              <polygon class="geometry-line" points="50,89 25,41 75,41" stroke="#fb7185" stroke-width="0.32"></polygon>
+            </g>
+
+            <polygon points="50,14 14,81 86,81" fill="rgba(240,199,94,0.035)" stroke="url(#triangleGrad)" stroke-width="1.15" stroke-opacity="0.34" filter="url(#goldGlow)"></polygon>
+            <polygon class="triangle-line" points="50,14 14,81 86,81" fill="none" stroke="#f0c75e" stroke-width="0.48" stroke-linecap="round" stroke-linejoin="round"></polygon>
+
+            <line class="inner-line" x1="50" y1="58" x2="50" y2="14" stroke="#42d5c8" stroke-width="0.35" stroke-dasharray="1.6 2.8" stroke-linecap="round"></line>
+            <line class="inner-line" x1="50" y1="58" x2="14" y2="81" stroke="#f0c75e" stroke-width="0.35" stroke-dasharray="1.6 2.8" stroke-linecap="round"></line>
+            <line class="inner-line" x1="50" y1="58" x2="86" y2="81" stroke="#fb7185" stroke-width="0.35" stroke-dasharray="1.6 2.8" stroke-linecap="round"></line>
+
+            <circle class="vertex-dot" cx="50" cy="14" r="1.55" fill="#c9fff9" filter="url(#goldGlow)"></circle>
+            <circle class="vertex-dot" cx="14" cy="81" r="1.55" fill="#f3d27a" filter="url(#goldGlow)"></circle>
+            <circle class="vertex-dot" cx="86" cy="81" r="1.55" fill="#aff6bf" filter="url(#goldGlow)"></circle>
+            <circle class="center-dot" cx="50" cy="58" r="2.1" fill="#f0c75e" filter="url(#goldGlow)"></circle>
+            <circle cx="50" cy="58" r="0.78" fill="#fff7d7" opacity="0.95"></circle>
+          </svg>
+
+          <a href="introduce1.html" class="node node-top">
+            <span class="node-mark" aria-hidden="true"></span>
+            <span class="node-label">
+              <span class="node-title">爱因斯坦</span>
+            </span>
+          </a>
+
+          <a href="introduce2.html" class="node node-left">
+            <span class="node-mark" aria-hidden="true"></span>
+            <span class="node-label">
+              <span class="node-title">罗伯特·比格罗</span>
+            </span>
+          </a>
+
+          <a href="introduce3.html" class="node node-right">
+            <span class="node-mark" aria-hidden="true"></span>
+            <span class="node-label">
+              <span class="node-title">门罗</span>
+            </span>
+          </a>
+
+          <a href="homepage.html" class="node node-center">
+            <span class="node-mark" aria-hidden="true"></span>
+            <span class="node-label">
+              <span class="node-title">主页</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const starContainer = document.getElementById("star-bg-container");
+      const wordContainer = document.getElementById("word-bg-container");
+      const isSmallScreen = window.matchMedia("(max-width: 640px)").matches;
+      const starCount = isSmallScreen ? 30 : 62;
+      const wordCount = isSmallScreen ? 18 : 42;
+      const starColors = ["#f0c75e", "#42d5c8", "#fb7185", "#a78bfa"];
+
+      for (let i = 0; i < starCount; i += 1) {
+        const star = document.createElement("span");
+        const size = Math.random() * 2.8 + 1;
+        star.className = "star-particle";
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.color = starColors[Math.floor(Math.random() * starColors.length)];
+        star.style.setProperty("--particle-color", "currentColor");
+        star.style.setProperty("--twinkle-dur", `${Math.random() * 4 + 2.4}s`);
+        star.style.setProperty("--twinkle-delay", `${Math.random() * -5}s`);
+        starContainer.appendChild(star);
+      }
+
+      const words = [
+        "爱", "Love", "Amour", "Liebe", "Amor", "Любовь", "حب", "사랑",
+        "愛", "Prema", "Cinta", "Rak", "Kärlek", "Liefde", "Amore", "Pyaar", "Mahal",
+        "✦", "✧", "◈", "◇", "⊙", "☆", "⟡", "△", "▽", "✺", "☉", "◎"
+      ];
+
+      for (let i = 0; i < wordCount; i += 1) {
+        const word = document.createElement("span");
+        word.className = "float-word";
+        word.textContent = words[Math.floor(Math.random() * words.length)];
+        word.style.left = `${Math.random() * 100}vw`;
+        word.style.setProperty("--float-dur", `${Math.random() * 22 + 16}s`);
+        word.style.setProperty("--float-delay", `${Math.random() * -30}s`);
+        word.style.setProperty("--word-opacity", `${Math.random() * 0.25 + 0.1}`);
+        wordContainer.appendChild(word);
+      }
+    });
+  </script>
+</body>
+</html>

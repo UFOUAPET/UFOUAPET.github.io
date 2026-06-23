@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱的终极方程</title>
+    <style>
+        :root {
+            --bg-deep: #080c16;
+            --bg-surface: #0d1225;
+            --gold: #c9a96e;
+            --gold-light: #e0c88e;
+            --gold-pale: #f0dbb0;
+            --gold-dark: #8b6f3d;
+            --accent-amber: #d4943a;
+            --accent-rose: #c97a6e;
+            --text-primary: #e8e0d5;
+            --text-secondary: #b8a99a;
+            --text-muted: #7a6e60;
+            --border-gold: rgba(201, 169, 110, 0.35);
+            --glow-gold: rgba(201, 169, 110, 0.5);
+            --glow-strong: rgba(224, 200, 142, 0.7);
+            --glow-rose: rgba(201, 122, 110, 0.4);
+            --radius-geo: 3px;
+            --transition-smooth: 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+            --transition-bounce: 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --font-heading: 'Georgia', 'Noto Serif SC', 'STSong', 'SimSun', 'Songti SC', serif;
+            --font-body: 'Georgia', 'Noto Serif SC', 'STSong', 'SimSun', 'Songti SC', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.7;
+            letter-spacing: 0.02em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: floatParticle linear infinite;
+            opacity: 0;
+            box-shadow: 0 0 4px var(--glow-gold), 0 0 8px var(--glow-gold);
+        }
+
+        .particle.particle-rose {
+            background: #c97a6e;
+            box-shadow: 0 0 4px var(--glow-rose), 0 0 8px var(--glow-rose);
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.9;
+            }
+            30% {
+                opacity: 0.6;
+            }
+            60% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-105vh) translateX(40px) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatParticleAlt {
+            0% {
+                transform: translateY(0) translateX(0) scale(0.8);
+                opacity: 0;
+            }
+            8% {
+                opacity: 0.8;
+            }
+            35% {
+                opacity: 0.5;
+            }
+            65% {
+                opacity: 0.15;
+            }
+            95% {
+                opacity: 0.65;
+            }
+            100% {
+                transform: translateY(-110vh) translateX(-50px) scale(0.25);
+                opacity: 0;
+            }
+        }
+
+        .sacred-geometry-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(90vmin, 800px);
+            height: min(90vmin, 800px);
+            z-index: 0;
+            pointer-events: none;
+            animation: rotateSacred 120s linear infinite;
+            opacity: 0.28;
+        }
+
+        .sacred-geometry-bg svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sacred-geometry-bg .geo-line {
+            stroke: var(--gold);
+            stroke-width: 0.6;
+            fill: none;
+            stroke-dasharray: 3 8;
+            animation: geoLinePulse 8s ease-in-out infinite;
+        }
+
+        .sacred-geometry-bg .geo-circle {
+            stroke: var(--gold-dark);
+            stroke-width: 0.7;
+            fill: none;
+            opacity: 0.7;
+            animation: geoCircleGlow 6s ease-in-out infinite;
+        }
+
+        .sacred-geometry-bg .geo-circle:nth-child(2) {
+            animation-delay: -2s;
+        }
+        .sacred-geometry-bg .geo-circle:nth-child(3) {
+            animation-delay: -4s;
+        }
+        .sacred-geometry-bg .geo-circle:nth-child(4) {
+            animation-delay: -1s;
+        }
+        .sacred-geometry-bg .geo-circle:nth-child(5) {
+            animation-delay: -3s;
+        }
+        .sacred-geometry-bg .geo-circle:nth-child(6) {
+            animation-delay: -5s;
+        }
+        .sacred-geometry-bg .geo-circle:nth-child(7) {
+            animation-delay: -1.5s;
+        }
+        .sacred-geometry-bg .geo-circle.rose-tint {
+            stroke: #a06a5e;
+            opacity: 0.55;
+            animation: geoCircleGlowRose 7s ease-in-out infinite;
+        }
+
+        @keyframes geoCircleGlow {
+            0%,
+            100% {
+                opacity: 0.45;
+                stroke-width: 0.7;
+            }
+            50% {
+                opacity: 0.85;
+                stroke-width: 1.2;
+            }
+        }
+
+        @keyframes geoCircleGlowRose {
+            0%,
+            100% {
+                opacity: 0.35;
+                stroke-width: 0.6;
+            }
+            50% {
+                opacity: 0.7;
+                stroke-width: 1.1;
+            }
+        }
+
+        @keyframes geoLinePulse {
+            0%,
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 0.5;
+            }
+            50% {
+                stroke-dashoffset: 22;
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes rotateSacred {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .sacred-geometry-bg-2 {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(75vmin, 650px);
+            height: min(75vmin, 650px);
+            z-index: 0;
+            pointer-events: none;
+            animation: rotateSacredReverse 90s linear infinite;
+            opacity: 0.2;
+        }
+
+        .sacred-geometry-bg-2 svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sacred-geometry-bg-2 .geo-line-2 {
+            stroke: var(--accent-amber);
+            stroke-width: 0.5;
+            fill: none;
+            stroke-dasharray: 5 15;
+            animation: geoLinePulse2 10s ease-in-out infinite;
+        }
+
+        .sacred-geometry-bg-2 .geo-line-2.rose-line {
+            stroke: #c97a6e;
+            stroke-dasharray: 8 20;
+            animation: geoLinePulse2 12s ease-in-out infinite;
+            animation-delay: -5s;
+        }
+
+        @keyframes geoLinePulse2 {
+            0%,
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 0.35;
+            }
+            50% {
+                stroke-dashoffset: 30;
+                opacity: 0.75;
+            }
+        }
+
+        @keyframes rotateSacredReverse {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(-360deg);
+            }
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .header-ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .header-ornament .ornament-line {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            position: relative;
+        }
+
+        .header-ornament .ornament-diamond {
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            transform: rotate(45deg);
+            box-shadow: 0 0 12px var(--glow-strong), 0 0 24px var(--glow-gold);
+            animation: diamondPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes diamondPulse {
+            0%,
+            100% {
+                box-shadow: 0 0 12px var(--glow-strong), 0 0 24px var(--glow-gold);
+                transform: rotate(45deg) scale(1);
+            }
+            50% {
+                box-shadow: 0 0 20px var(--glow-strong), 0 0 40px var(--glow-gold), 0 0 60px rgba(201, 169, 110, 0.4);
+                transform: rotate(45deg) scale(1.35);
+            }
+        }
+
+        .main-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            color: var(--gold-light);
+            letter-spacing: 0.08em;
+            font-weight: normal;
+            text-shadow: 0 0 30px var(--glow-gold), 0 0 60px rgba(201, 169, 110, 0.3);
+            position: relative;
+            display: inline-block;
+            transition: all 0.8s ease;
+        }
+
+        .main-subtitle {
+            font-family: var(--font-heading);
+            font-size: clamp(0.85rem, 1.6vw, 1.1rem);
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            margin-top: 0.4rem;
+            font-style: italic;
+        }
+
+        .geo-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0 2rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .geo-divider .hex-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gold-dark);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            opacity: 0.6;
+            animation: hexDotFade 4s ease-in-out infinite;
+        }
+        .geo-divider .hex-dot:nth-child(2) {
+            animation-delay: -0.6s;
+        }
+        .geo-divider .hex-dot:nth-child(3) {
+            animation-delay: -1.2s;
+        }
+        .geo-divider .hex-dot:nth-child(4) {
+            animation-delay: -1.8s;
+        }
+        .geo-divider .hex-dot:nth-child(5) {
+            animation-delay: -2.4s;
+        }
+        .geo-divider .hex-dot:nth-child(6) {
+            animation-delay: -3s;
+        }
+        .geo-divider .hex-dot:nth-child(7) {
+            animation-delay: -0.3s;
+        }
+
+        @keyframes hexDotFade {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.4);
+                background: var(--gold-light);
+                box-shadow: 0 0 10px var(--glow-gold);
+            }
+        }
+
+        .articles-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .articles-nav::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(201, 169, 110, 0.25) 20%,
+                    rgba(201, 169, 110, 0.4) 50%,
+                    rgba(201, 169, 110, 0.25) 80%,
+                    transparent);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .article-node {
+            position: relative;
+            cursor: pointer;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-bounce);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .node-shape {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-surface);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            border: 1.5px solid var(--border-gold);
+            transition: all var(--transition-smooth);
+            z-index: 1;
+            box-shadow:
+                0 0 15px rgba(201, 169, 110, 0.15),
+                inset 0 0 8px rgba(201, 169, 110, 0.05);
+        }
+
+        .node-inner-border {
+            position: absolute;
+            inset: 5px;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            border: 1px dashed rgba(201, 169, 110, 0.3);
+            z-index: 2;
+            pointer-events: none;
+            transition: all var(--transition-smooth);
+            animation: dashRotate 12s linear infinite;
+        }
+
+        @keyframes dashRotate {
+            0% {
+                border-dash-offset: 0;
+            }
+            100% {
+                border-dash-offset: 40;
+            }
+        }
+
+        .node-icon {
+            position: relative;
+            z-index: 3;
+            font-size: 1.6rem;
+            color: var(--gold);
+            transition: all var(--transition-smooth);
+            pointer-events: none;
+            text-shadow: 0 0 8px var(--glow-gold);
+        }
+
+        .node-label {
+            position: absolute;
+            bottom: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+            transition: all var(--transition-smooth);
+            z-index: 3;
+            pointer-events: none;
+            font-family: var(--font-heading);
+        }
+
+        .article-node:hover .node-shape {
+            border-color: var(--gold-light);
+            box-shadow:
+                0 0 25px var(--glow-gold),
+                0 0 50px rgba(201, 169, 110, 0.3),
+                inset 0 0 15px rgba(201, 169, 110, 0.1);
+            transform: scale(1.06);
+        }
+
+        .article-node:hover .node-icon {
+            color: var(--gold-light);
+            text-shadow: 0 0 16px var(--glow-strong), 0 0 30px var(--glow-gold);
+            transform: scale(1.15);
+        }
+
+        .article-node:hover .node-label {
+            color: var(--gold-pale);
+        }
+
+        .article-node:hover .node-inner-border {
+            border-color: rgba(224, 200, 142, 0.55);
+        }
+
+        .article-node.active .node-shape {
+            border-color: var(--gold-light);
+            background: rgba(20, 18, 30, 0.95);
+            box-shadow:
+                0 0 30px var(--glow-strong),
+                0 0 60px rgba(201, 169, 110, 0.45),
+                0 0 90px rgba(201, 169, 110, 0.2),
+                inset 0 0 20px rgba(201, 169, 110, 0.12);
+            transform: scale(1.08);
+            animation: activeNodeGlow 2s ease-in-out infinite;
+        }
+
+        .article-node.active .node-icon {
+            color: #fff;
+            text-shadow: 0 0 20px var(--glow-strong), 0 0 40px var(--glow-gold), 0 0 60px rgba(255, 220, 160, 0.6);
+        }
+
+        .article-node.active .node-label {
+            color: var(--gold-light);
+            font-weight: bold;
+        }
+
+        .article-node.node-primary .node-shape {
+            border-color: rgba(201, 169, 110, 0.55);
+            box-shadow:
+                0 0 20px rgba(201, 169, 110, 0.2),
+                0 0 40px rgba(201, 122, 110, 0.1),
+                inset 0 0 10px rgba(201, 169, 110, 0.06);
+        }
+
+        .article-node.node-primary .node-icon {
+            font-size: 1.8rem;
+            color: #e8c88e;
+            text-shadow: 0 0 14px var(--glow-strong), 0 0 28px rgba(201, 122, 110, 0.35);
+            animation: primaryIconWarmth 5s ease-in-out infinite;
+        }
+
+        @keyframes primaryIconWarmth {
+            0%,
+            100% {
+                text-shadow: 0 0 14px var(--glow-strong), 0 0 28px rgba(201, 122, 110, 0.35);
+            }
+            50% {
+                text-shadow: 0 0 22px var(--glow-strong), 0 0 42px rgba(201, 122, 110, 0.6), 0 0 60px rgba(255, 180, 140, 0.3);
+            }
+        }
+
+        @keyframes activeNodeGlow {
+            0%,
+            100% {
+                box-shadow: 0 0 30px var(--glow-strong), 0 0 60px rgba(201, 169, 110, 0.45), 0 0 90px rgba(201, 169, 110, 0.2),
+                    inset 0 0 20px rgba(201, 169, 110, 0.12);
+            }
+            50% {
+                box-shadow: 0 0 40px var(--glow-strong), 0 0 75px rgba(201, 169, 110, 0.55), 0 0 110px rgba(201, 169, 110, 0.3),
+                    inset 0 0 28px rgba(201, 169, 110, 0.18);
+            }
+        }
+
+        .article-node.node-empty {
+            cursor: default;
+            opacity: 0.45;
+            pointer-events: none;
+        }
+        .article-node.node-empty .node-shape {
+            border-style: dotted;
+            border-color: rgba(201, 169, 110, 0.2);
+            box-shadow: none;
+        }
+        .article-node.node-empty .node-icon {
+            color: rgba(201, 169, 110, 0.35);
+            text-shadow: none;
+        }
+        .article-node.node-empty .node-label {
+            color: rgba(122, 110, 96, 0.4);
+        }
+        .article-node.node-empty .node-inner-border {
+            border-color: rgba(201, 169, 110, 0.12);
+            animation: none;
+        }
+        .article-node.node-empty:hover .node-shape {
+            transform: none;
+            border-color: rgba(201, 169, 110, 0.2);
+            box-shadow: none;
+        }
+        .article-node.node-empty:hover .node-icon {
+            color: rgba(201, 169, 110, 0.35);
+            text-shadow: none;
+            transform: none;
+        }
+
+        .article-display-wrapper {
+            width: 100%;
+            max-width: 720px;
+            position: relative;
+            z-index: 2;
+            transition: all var(--transition-smooth);
+        }
+
+        .article-display {
+            background: rgba(13, 18, 37, 0.85);
+            border: 1.5px solid var(--border-gold);
+            border-radius: 2px;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px) scale(0.96);
+            transition: all 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+            position: relative;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(201, 169, 110, 0.08) inset;
+        }
+
+        .article-display.expanded {
+            max-height: 70vh;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            padding: 2.5rem 2.2rem;
+            overflow-y: auto;
+        }
+
+        .article-display.expanded::-webkit-scrollbar {
+            width: 5px;
+        }
+        .article-display.expanded::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .article-display.expanded::-webkit-scrollbar-thumb {
+            background: rgba(201, 169, 110, 0.3);
+            border-radius: 3px;
+        }
+        .article-display.expanded::-webkit-scrollbar-thumb:hover {
+            background: rgba(201, 169, 110, 0.55);
+        }
+
+        .article-inner {
+            position: relative;
+            z-index: 3;
+        }
+
+        .article-title-display {
+            font-family: var(--font-heading);
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            color: var(--gold-light);
+            letter-spacing: 0.06em;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.25);
+            position: relative;
+            text-shadow: 0 0 15px rgba(201, 169, 110, 0.3);
+        }
+
+        .article-title-display::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            box-shadow: 0 0 8px var(--glow-gold);
+        }
+
+        .article-body-display {
+            font-family: var(--font-body);
+            font-size: clamp(0.9rem, 1.4vw, 1rem);
+            color: var(--text-secondary);
+            line-height: 1.9;
+            letter-spacing: 0.03em;
+        }
+
+        .article-body-display p {
+            margin-bottom: 1rem;
+        }
+        .article-body-display p:last-child {
+            margin-bottom: 0;
+        }
+
+        .article-body-display .highlight-phrase {
+            color: var(--gold-pale);
+            font-style: italic;
+            letter-spacing: 0.05em;
+        }
+
+        .letter-signature {
+            text-align: right;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed rgba(201, 169, 110, 0.2);
+            color: var(--gold-pale);
+            font-style: italic;
+            letter-spacing: 0.04em;
+        }
+
+        .letter-signature .sig-name {
+            display: block;
+            margin-top: 0.3rem;
+            font-size: 1.05em;
+            color: var(--gold-light);
+            letter-spacing: 0.06em;
+        }
+
+        .btn-close-article {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            z-index: 10;
+            background: none;
+            border: 1px solid rgba(201, 169, 110, 0.4);
+            color: var(--gold);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all var(--transition-smooth);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            opacity: 0;
+            pointer-events: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .article-display.expanded .btn-close-article {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .btn-close-article:hover {
+            border-color: var(--gold-light);
+            color: #fff;
+            box-shadow: 0 0 16px var(--glow-gold);
+            background: rgba(201, 169, 110, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .geo-separator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1.2rem 0;
+            opacity: 0.5;
+        }
+        .geo-separator .sep-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--gold-dark);
+            border-radius: 50%;
+        }
+        .geo-separator .sep-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.4), transparent);
+        }
+
+        .footer-hint {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            font-family: var(--font-heading);
+            opacity: 0.6;
+            transition: opacity 0.5s;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .articles-nav {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .articles-nav::before {
+                display: none;
+            }
+
+            .article-node {
+                width: 70px;
+                height: 70px;
+            }
+
+            .node-icon {
+                font-size: 1.3rem;
+            }
+            .node-label {
+                font-size: 0.65rem;
+                bottom: -24px;
+            }
+
+            .article-display.expanded {
+                padding: 1.8rem 1.2rem;
+                max-height: 65vh;
+            }
+
+            .btn-close-article {
+                width: 30px;
+                height: 30px;
+                top: 10px;
+                right: 10px;
+                font-size: 0.9rem;
+            }
+
+            .sacred-geometry-bg {
+                width: 95vmin;
+                height: 95vmin;
+                opacity: 0.2;
+            }
+            .sacred-geometry-bg-2 {
+                width: 80vmin;
+                height: 80vmin;
+                opacity: 0.15;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .article-node {
+                width: 56px;
+                height: 56px;
+            }
+            .node-icon {
+                font-size: 1.05rem;
+            }
+            .node-label {
+                font-size: 0.6rem;
+                bottom: -22px;
+            }
+            .articles-nav {
+                gap: 0.7rem;
+            }
+            .article-display.expanded {
+                padding: 1.4rem 1rem;
+                max-height: 60vh;
+            }
+            .btn-close-article {
+                width: 26px;
+                height: 26px;
+                top: 8px;
+                right: 8px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="particles-container" id="particlesContainer" aria-hidden="true"></div>
+
+    <div class="sacred-geometry-bg" aria-hidden="true">
+        <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="300" cy="300" r="90" class="geo-circle" />
+            <circle cx="300" cy="210" r="90" class="geo-circle" />
+            <circle cx="378" cy="255" r="90" class="geo-circle" />
+            <circle cx="378" cy="345" r="90" class="geo-circle rose-tint" />
+            <circle cx="300" cy="390" r="90" class="geo-circle" />
+            <circle cx="222" cy="345" r="90" class="geo-circle rose-tint" />
+            <circle cx="222" cy="255" r="90" class="geo-circle" />
+            <circle cx="300" cy="300" r="185" class="geo-circle" style="stroke-dasharray:4 12; opacity:0.5;" />
+            <circle cx="300" cy="300" r="195" class="geo-circle" style="stroke-width:0.4; opacity:0.35;" />
+            <polygon points="300,105 468,202 468,398 300,495 132,398 132,202" class="geo-line" />
+            <line x1="300" y1="105" x2="300" y2="495" class="geo-line" />
+            <line x1="132" y1="202" x2="468" y2="398" class="geo-line" />
+            <line x1="468" y1="202" x2="132" y2="398" class="geo-line" />
+        </svg>
+    </div>
+
+    <div class="sacred-geometry-bg-2" aria-hidden="true">
+        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="250,60 420,380 80,380" class="geo-line-2" />
+            <polygon points="250,440 420,120 80,120" class="geo-line-2 rose-line" />
+            <circle cx="250" cy="250" r="130" class="geo-line-2" style="stroke-dasharray:6 18;" />
+            <circle cx="250" cy="250" r="80" class="geo-line-2 rose-line" style="stroke-dasharray:2 10; opacity:0.5;" />
+            <circle cx="250" cy="250" r="3" fill="#d4943a" opacity="0.6" />
+        </svg>
+    </div>
+
+    <div class="main-container">
+        <header class="header-section">
+            <div class="header-ornament">
+                <span class="ornament-line"></span>
+                <span class="ornament-diamond"></span>
+                <span class="ornament-line"></span>
+            </div>
+            <h1 class="main-title">爱的终极方程</h1>
+            <p class="main-subtitle">— Lumen Amoris · Ultima Ratio —</p>
+        </header>
+
+        <div class="geo-divider" aria-hidden="true">
+            <span class="hex-dot"></span><span class="hex-dot"></span><span class="hex-dot"></span>
+            <span class="hex-dot"></span><span class="hex-dot"></span><span class="hex-dot"></span>
+            <span class="hex-dot"></span>
+        </div>
+
+        <nav class="articles-nav" id="articlesNav" aria-label="文章导航"></nav>
+
+        <div class="article-display-wrapper">
+            <div class="article-display" id="articleDisplay">
+                <button class="btn-close-article"
+                id="btnCloseArticle"
+                title="收起文章"
+                aria-label="关闭文章">✕</button>
+                <div class="article-inner" id="articleInner"></div>
+            </div>
+        </div>
+
+        <p class="footer-hint" id="footerHint">✦ 点击上方节点 · 探寻爱的方程 ✦</p>
+    </div>
+
+    <script>
+        (function() {
+            const articlesData = [{
+                id: 'article-love',
+                icon: '✧',
+                label: '爱的方程',
+                title: '爱因斯坦给女儿 Lieserl 的最后一封信',
+                isPrimary: true,
+                body: `
+                    <p>当我发表<span class="highlight-phrase">相对论</span>的时候，几乎没有人能理解我。而我现在即将揭示的，并且要传达给人类的信息，也是与人类对世界现有的误解和偏见相互冲突的。</p>
+                    <p>我要你尽可能的保管这些信件，几年，几十年，直到社会进步到能够接受我下面将要解释的内容，才公之于众。</p>
+                    <div class="geo-separator" aria-hidden="true">
+                        <span class="sep-dot"></span><span class="sep-line"></span><span class="sep-dot"></span>
+                    </div>
+                    <p>有一种极为广大的能量，迄今为止，科学都没有对其找到一个合理的解释。它包含并统领所有其他的一切，而且在宇宙中所运行的一切现象背后，而我们至今未曾完全认识它。这种宇宙的能量叫做<span class="highlight-phrase">"爱"</span>。</p>
+                    <p>当科学家们试图找到一个适用于一切的宇宙统一理论时，他们却忘了这最大能的无形之力。<span class="highlight-phrase">爱是光</span>，光照那些付出它和领受它的人；<span class="highlight-phrase">爱是万有引力</span>，使人们相互吸引；爱是大能，因为它让我们所拥有的美好不断加倍，并且使得人类不会因他们盲目的自私而灭绝；爱能掩盖，亦能启示。我们因爱而活着，也因爱消亡。<span class="highlight-phrase">爱就是神，神就是爱。</span></p>
+                    <div class="geo-separator" aria-hidden="true">
+                        <span class="sep-dot"></span><span class="sep-line"></span><span class="sep-dot"></span>
+                    </div>
+                    <p>这股能量解释了一切，也给了我们生活的意义。这是一个我们无视太久的变量，也许是因为我们害怕爱，因为这是宇宙中<span class="highlight-phrase">唯一一个人类无法随意驾驭的能量</span>。</p>
+                    <p>为了让你把"爱"看得更清楚，我用我最著名的方程式做个简单的替代法。拿<span class="highlight-phrase">E=mc²</span>做比方，我们同意说治愈这个世界的能量，可以通过<span class="highlight-phrase">爱乘以光速的平方</span>来获得。那么我们便能得出这样一个结论：<span class="highlight-phrase">爱是最强大的能量，因为爱无极限。</span></p>
+                    <div class="geo-separator" aria-hidden="true">
+                        <span class="sep-dot"></span><span class="sep-line"></span><span class="sep-dot"></span>
+                    </div>
+                    <p>当人类无法运用和控制宇宙中的其他那些与我们为敌的能量之后，用另一种能量来滋养我们自己，已经迫在眉睫。</p>
+                    <p>如果我们想要自己的物种得以存活，如果我们想要为我们的生命找到意义，如果我们想要拯救这个世界和每一个居住在其中的生灵，那么<span class="highlight-phrase">爱，就是唯一的答案</span>。</p>
+                    <p>也许我们还没有准备好制造一个<span class="highlight-phrase">爱的炸弹</span>，一个足够强大的装备，以彻底消灭能够摧毁地球的仇恨、自私和贪婪。然而，<span class="highlight-phrase">每一个人的里面，都携带着微小却大能的爱的发动机</span>，其中的能量正等待被释放。</p>
+                    <div class="geo-separator" aria-hidden="true">
+                        <span class="sep-dot"></span><span class="sep-line"></span><span class="sep-dot"></span>
+                    </div>
+                    <p>当我们学会给与和领受这股宇宙能量的时候，亲爱的Lieserl，我们不得不承认<span class="highlight-phrase">爱能战胜一切，爱超越一切，因为爱就是生命的精髓！</span></p>
+                    <p>我深感遗憾，自己没能表达穷尽我内心深处的东西，终我一生，我的心一直在为你安静地跳动。或许现在说抱歉已经太迟了，但<span class="highlight-phrase">时间是相对的</span>，不是吗？我必须告诉你，我爱你；我也必须告诉你，正是因为你，我才得出了这个<span class="highlight-phrase">终极的答案</span>！！</p>
+                    <div class="letter-signature">
+                        你的父亲，
+                        <span class="sig-name">阿尔伯特</span>
+                    </div>
+                `,
+            }, {
+                id: 'article-besso',
+                icon: '♆',
+                label: '告别幻觉',
+                title: '爱因斯坦致贝索遗孀的信 · 1955年3月21日',
+                isPrimary: false,
+                body: `
+                    <p>亲爱的维罗，亲爱的比切夫人：</p>
+                    <p>他的离去与他的一生一样安详和谐。即便在经历了数十年的艰难岁月后，他依然保持着那份澄澈、谦逊以及面对各种际遇时的淡定。这样和谐的一生，很少能与如此敏锐的智力同时出现。在大多数情况下，高度发展的智商会在其周围建起一堵傲慢与冷漠的墙，但他的情况却恰恰相反。</p>
+                    <p>不过，作为一个人，我最钦佩他的地方，在于他不仅多年来能够与一位妻子和平相处，而且还能保持持久的和谐。而在这件事（指婚姻）上，我曾两次尝试，却都以相当羞愧的失败告终。</p>
+                    <div class="geo-separator" aria-hidden="true">
+                        <span class="sep-dot"></span><span class="sep-line"></span><span class="sep-dot"></span>
+                    </div>
+                    <p>我们的友谊诞生于我还在苏黎世求学的青年时代，那时我们定期在音乐晚会上见面。他比我年长、比我睿智，总是在那里启发我们。他的兴趣圈子似乎真正无边无际。然而，最能代表他特质的，还是他对批判性哲学的关注。</p>
+                    <p>后来，是专利局的工作让我们聚在了一起。在下班回家的路上，我们的交谈具有一种无与伦比的魅力——仿佛人类的世俗纷扰根本不复存在。</p>
+                    <div class="geo-separator" aria-hidden="true">
+                        <span class="sep-dot"></span><span class="sep-line"></span><span class="sep-dot"></span>
+                    </div>
+                    <p>不过到了后期，我们通过书信沟通时，开始变得有些难以理解对方了。他的笔尖往往无法跟上他那多变活跃的思想，以至于在大多数情况下，收信人根本无法猜出他省略了什么。</p>
+                    <p>现在，他在这告别这个奇异世界的旅程中，又一次比我提前了一小步。这并没有什么。对于我们这些相信物理学的人来说，<span class="highlight-phrase">过去、现在和未来之间的区别，只是一种顽固的幻觉。</span></p>
+                    <p>谨向你们致以最衷心的谢意与慰问。</p>
+                    <div class="letter-signature">
+                        你们的，
+                        <span class="sig-name">阿尔伯特·爱因斯坦</span>
+                    </div>
+                `,
+            }, {
+                id: 'article-empty-2',
+                icon: '△',
+                label: '',
+                title: '',
+                body: '',
+                isEmpty: true,
+            }, {
+                id: 'article-empty-3',
+                icon: '◈',
+                label: '',
+                title: '',
+                body: '',
+                isEmpty: true,
+            }];
+
+            const articlesNav = document.getElementById('articlesNav');
+            const articleDisplay = document.getElementById('articleDisplay');
+            const articleInner = document.getElementById('articleInner');
+            const btnCloseArticle = document.getElementById('btnCloseArticle');
+            const footerHint = document.getElementById('footerHint');
+            let currentActiveId = null;
+            let isExpanded = false;
+
+            function createParticles() {
+                const container = document.getElementById('particlesContainer');
+                const count = 40;
+                let html = '';
+                for (let i = 0; i < count; i++) {
+                    const size = Math.random() * 2.5 + 1;
+                    const left = Math.random() * 100;
+                    const animDuration = Math.random() * 18 + 14;
+                    const animDelay = Math.random() * 20;
+                    const animType = Math.random() > 0.5 ? 'floatParticle' : 'floatParticleAlt';
+                    const isRose = Math.random() < 0.3;
+                    const roseClass = isRose ? ' particle-rose' : '';
+                    html += `
+                    <div class="particle${roseClass}"
+                         style="
+                            width:${size}px;
+                            height:${size}px;
+                            left:${left}%;
+                            bottom:-20px;
+                            animation-name:${animType};
+                            animation-duration:${animDuration}s;
+                            animation-delay:${animDelay}s;
+                         "
+                    ></div>`;
+                }
+                container.innerHTML = html;
+            }
+
+            function renderArticleNodes() {
+                let html = '';
+                articlesData.forEach((article) => {
+                    const emptyClass = article.isEmpty ? ' node-empty' : '';
+                    const primaryClass = article.isPrimary ? ' node-primary' : '';
+                    html += `
+                    <div class="article-node${emptyClass}${primaryClass}"
+                         data-article-id="${article.id}"
+                         role="${article.isEmpty ? 'presentation' : 'button'}"
+                         tabindex="${article.isEmpty ? '-1' : '0'}"
+                         aria-label="${article.label || '空白节点'}"
+                         title="${article.label || ''}">
+                        <div class="node-shape"></div>
+                        <div class="node-inner-border"></div>
+                        <span class="node-icon" aria-hidden="true">${article.icon}</span>
+                        <span class="node-label">${article.label}</span>
+                    </div>`;
+                });
+                articlesNav.innerHTML = html;
+
+                const nodes = articlesNav.querySelectorAll('.article-node:not(.node-empty)');
+                nodes.forEach(node => {
+                    node.addEventListener('click', () => {
+                        const articleId = node.getAttribute('data-article-id');
+                        handleNodeClick(articleId);
+                    });
+                    node.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            const articleId = node.getAttribute('data-article-id');
+                            handleNodeClick(articleId);
+                        }
+                    });
+                });
+            }
+
+            function handleNodeClick(articleId) {
+                const article = articlesData.find(a => a.id === articleId);
+                if (!article || article.isEmpty) return;
+
+                if (currentActiveId === articleId && isExpanded) {
+                    collapseArticle();
+                    return;
+                }
+
+                if (currentActiveId === articleId && !isExpanded) {
+                    expandArticle(article);
+                    return;
+                }
+
+                currentActiveId = articleId;
+                updateActiveNode();
+                expandArticle(article);
+            }
+
+            function expandArticle(article) {
+                articleInner.innerHTML = `
+                    <h2 class="article-title-display">${article.title}</h2>
+                    <div class="article-body-display">${article.body}</div>
+                `;
+
+                articleDisplay.classList.add('expanded');
+                // 关键修复：每次展开文章时，将内部滚动位置重置到顶部
+                articleDisplay.scrollTop = 0;
+                isExpanded = true;
+                footerHint.style.opacity = '0';
+                updateActiveNode();
+
+                setTimeout(() => {
+                    articleDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 150);
+            }
+
+            function collapseArticle() {
+                articleDisplay.classList.remove('expanded');
+                isExpanded = false;
+                footerHint.style.opacity = '0.6';
+                updateActiveNode();
+            }
+
+            function updateActiveNode() {
+                const allNodes = articlesNav.querySelectorAll('.article-node:not(.node-empty)');
+                allNodes.forEach(node => {
+                    const nodeId = node.getAttribute('data-article-id');
+                    if (nodeId === currentActiveId && isExpanded) {
+                        node.classList.add('active');
+                    } else {
+                        node.classList.remove('active');
+                    }
+                });
+            }
+
+            btnCloseArticle.addEventListener('click', () => {
+                collapseArticle();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isExpanded) {
+                    collapseArticle();
+                }
+            });
+
+            function init() {
+                createParticles();
+                renderArticleNodes();
+                footerHint.style.opacity = '0.6';
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+            window.loveEquationAPI = {
+                expandArticleById: (id) => {
+                    const article = articlesData.find(a => a.id === id);
+                    if (article && !article.isEmpty) {
+                        currentActiveId = id;
+                        expandArticle(article);
+                    }
+                },
+                collapseArticle,
+                getArticles: () => articlesData,
+                getCurrentArticleId: () => currentActiveId,
+                isArticleExpanded: () => isExpanded,
+            };
+
+            console.log('%c✧ 爱的终极方程已就绪 ✧',
+                'color:#e0c88e; font-size:1.2em; letter-spacing:0.05em;');
+            console.log('%c点击发光的几何节点，阅读爱因斯坦的信件。',
+                'color:#b8a99a; font-style:italic;');
+        })();
+    </script>
+</body>
+</html>
