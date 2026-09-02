@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>终极旅程 · 只有爱</title>
+    <style>
+        :root {
+            --bg-deep: #080c16;
+            --bg-surface: #0d1225;
+            --gold: #c9a96e;
+            --gold-light: #e0c88e;
+            --gold-pale: #f0dbb0;
+            --gold-dark: #8b6f3d;
+            --accent-amber: #d4943a;
+            --accent-rose: #c97a6e;
+            --text-primary: #e8e0d5;
+            --text-secondary: #b8a99a;
+            --text-muted: #7a6e60;
+            --border-gold: rgba(201, 169, 110, 0.35);
+            --glow-gold: rgba(201, 169, 110, 0.5);
+            --glow-strong: rgba(224, 200, 142, 0.7);
+            --glow-rose: rgba(201, 122, 110, 0.4);
+            --transition-smooth: 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+            --transition-bounce: 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --font-heading: 'Georgia', 'Noto Serif SC', 'STSong', 'SimSun', 'Songti SC', serif;
+            --font-body: 'Georgia', 'Noto Serif SC', 'STSong', 'SimSun', 'Songti SC', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.7;
+            letter-spacing: 0.02em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: floatParticle linear infinite;
+            opacity: 0;
+            box-shadow: 0 0 4px var(--glow-gold), 0 0 8px var(--glow-gold);
+        }
+
+        .particle.particle-rose {
+            background: #c97a6e;
+            box-shadow: 0 0 4px var(--glow-rose), 0 0 8px var(--glow-rose);
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+            5% { opacity: 0.9; }
+            30% { opacity: 0.6; }
+            60% { opacity: 0.2; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-105vh) translateX(40px) scale(0.3); opacity: 0; }
+        }
+
+        @keyframes floatParticleAlt {
+            0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
+            8% { opacity: 0.8; }
+            35% { opacity: 0.5; }
+            65% { opacity: 0.15; }
+            95% { opacity: 0.65; }
+            100% { transform: translateY(-110vh) translateX(-50px) scale(0.25); opacity: 0; }
+        }
+
+        .sacred-geometry-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(90vmin, 800px);
+            height: min(90vmin, 800px);
+            z-index: 0;
+            pointer-events: none;
+            animation: rotateSacred 120s linear infinite;
+            opacity: 0.28;
+        }
+
+        .sacred-geometry-bg svg { width: 100%; height: 100%; }
+
+        .sacred-geometry-bg .geo-line {
+            stroke: var(--gold);
+            stroke-width: 0.6;
+            fill: none;
+            stroke-dasharray: 3 8;
+            animation: geoLinePulse 8s ease-in-out infinite;
+        }
+
+        .sacred-geometry-bg .geo-circle {
+            stroke: var(--gold-dark);
+            stroke-width: 0.7;
+            fill: none;
+            opacity: 0.7;
+            animation: geoCircleGlow 6s ease-in-out infinite;
+        }
+
+        .sacred-geometry-bg .geo-circle:nth-child(2) { animation-delay: -2s; }
+        .sacred-geometry-bg .geo-circle:nth-child(3) { animation-delay: -4s; }
+        .sacred-geometry-bg .geo-circle:nth-child(4) { animation-delay: -1s; }
+        .sacred-geometry-bg .geo-circle:nth-child(5) { animation-delay: -3s; }
+        .sacred-geometry-bg .geo-circle:nth-child(6) { animation-delay: -5s; }
+        .sacred-geometry-bg .geo-circle:nth-child(7) { animation-delay: -1.5s; }
+        .sacred-geometry-bg .geo-circle.rose-tint {
+            stroke: #a06a5e;
+            opacity: 0.55;
+            animation: geoCircleGlowRose 7s ease-in-out infinite;
+        }
+
+        @keyframes geoCircleGlow {
+            0%, 100% { opacity: 0.45; stroke-width: 0.7; }
+            50% { opacity: 0.85; stroke-width: 1.2; }
+        }
+
+        @keyframes geoCircleGlowRose {
+            0%, 100% { opacity: 0.35; stroke-width: 0.6; }
+            50% { opacity: 0.7; stroke-width: 1.1; }
+        }
+
+        @keyframes geoLinePulse {
+            0%, 100% { stroke-dashoffset: 0; opacity: 0.5; }
+            50% { stroke-dashoffset: 22; opacity: 0.9; }
+        }
+
+        @keyframes rotateSacred {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .sacred-geometry-bg-2 {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(75vmin, 650px);
+            height: min(75vmin, 650px);
+            z-index: 0;
+            pointer-events: none;
+            animation: rotateSacredReverse 90s linear infinite;
+            opacity: 0.2;
+        }
+
+        .sacred-geometry-bg-2 svg { width: 100%; height: 100%; }
+
+        .sacred-geometry-bg-2 .geo-line-2 {
+            stroke: var(--accent-amber);
+            stroke-width: 0.5;
+            fill: none;
+            stroke-dasharray: 5 15;
+            animation: geoLinePulse2 10s ease-in-out infinite;
+        }
+
+        .sacred-geometry-bg-2 .geo-line-2.rose-line {
+            stroke: #c97a6e;
+            stroke-dasharray: 8 20;
+            animation: geoLinePulse2 12s ease-in-out infinite;
+            animation-delay: -5s;
+        }
+
+        @keyframes geoLinePulse2 {
+            0%, 100% { stroke-dashoffset: 0; opacity: 0.35; }
+            50% { stroke-dashoffset: 30; opacity: 0.75; }
+        }
+
+        @keyframes rotateSacredReverse {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .header-ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .header-ornament .ornament-line {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            position: relative;
+        }
+
+        .header-ornament .ornament-diamond {
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            transform: rotate(45deg);
+            box-shadow: 0 0 12px var(--glow-strong), 0 0 24px var(--glow-gold);
+            animation: diamondPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes diamondPulse {
+            0%, 100% {
+                box-shadow: 0 0 12px var(--glow-strong), 0 0 24px var(--glow-gold);
+                transform: rotate(45deg) scale(1);
+            }
+            50% {
+                box-shadow: 0 0 20px var(--glow-strong), 0 0 40px var(--glow-gold), 0 0 60px rgba(201, 169, 110, 0.4);
+                transform: rotate(45deg) scale(1.35);
+            }
+        }
+
+        .main-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            color: var(--gold-light);
+            letter-spacing: 0.08em;
+            font-weight: normal;
+            text-shadow: 0 0 30px var(--glow-gold), 0 0 60px rgba(201, 169, 110, 0.3);
+            position: relative;
+            display: inline-block;
+            transition: all 0.8s ease;
+        }
+
+        .main-subtitle {
+            font-family: var(--font-heading);
+            font-size: clamp(0.85rem, 1.6vw, 1.1rem);
+            color: var(--text-muted);
+            letter-spacing: 0.15em;
+            margin-top: 0.4rem;
+            font-style: italic;
+        }
+
+        .geo-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0 2rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .geo-divider .hex-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gold-dark);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            opacity: 0.6;
+            animation: hexDotFade 4s ease-in-out infinite;
+        }
+        .geo-divider .hex-dot:nth-child(2) { animation-delay: -0.6s; }
+        .geo-divider .hex-dot:nth-child(3) { animation-delay: -1.2s; }
+        .geo-divider .hex-dot:nth-child(4) { animation-delay: -1.8s; }
+        .geo-divider .hex-dot:nth-child(5) { animation-delay: -2.4s; }
+        .geo-divider .hex-dot:nth-child(6) { animation-delay: -3s; }
+        .geo-divider .hex-dot:nth-child(7) { animation-delay: -0.3s; }
+
+        @keyframes hexDotFade {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% {
+                opacity: 1;
+                transform: scale(1.4);
+                background: var(--gold-light);
+                box-shadow: 0 0 10px var(--glow-gold);
+            }
+        }
+
+        .articles-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .articles-nav::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(201, 169, 110, 0.25) 20%,
+                    rgba(201, 169, 110, 0.4) 50%,
+                    rgba(201, 169, 110, 0.25) 80%,
+                    transparent);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .article-node {
+            position: relative;
+            cursor: pointer;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-bounce);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .node-shape {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-surface);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            border: 1.5px solid var(--border-gold);
+            transition: all var(--transition-smooth);
+            z-index: 1;
+            box-shadow:
+                0 0 15px rgba(201, 169, 110, 0.15),
+                inset 0 0 8px rgba(201, 169, 110, 0.05);
+        }
+
+        .node-inner-border {
+            position: absolute;
+            inset: 5px;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            border: 1px dashed rgba(201, 169, 110, 0.3);
+            z-index: 2;
+            pointer-events: none;
+            transition: all var(--transition-smooth);
+            animation: dashRotate 12s linear infinite;
+        }
+
+        @keyframes dashRotate {
+            0% { border-dash-offset: 0; }
+            100% { border-dash-offset: 40; }
+        }
+
+        .node-icon {
+            position: relative;
+            z-index: 3;
+            font-size: 1.6rem;
+            color: var(--gold);
+            transition: all var(--transition-smooth);
+            pointer-events: none;
+            text-shadow: 0 0 8px var(--glow-gold);
+        }
+
+        .node-label {
+            position: absolute;
+            bottom: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+            transition: all var(--transition-smooth);
+            z-index: 3;
+            pointer-events: none;
+            font-family: var(--font-heading);
+        }
+
+        .article-node:hover .node-shape {
+            border-color: var(--gold-light);
+            box-shadow:
+                0 0 25px var(--glow-gold),
+                0 0 50px rgba(201, 169, 110, 0.3),
+                inset 0 0 15px rgba(201, 169, 110, 0.1);
+            transform: scale(1.06);
+        }
+
+        .article-node:hover .node-icon {
+            color: var(--gold-light);
+            text-shadow: 0 0 16px var(--glow-strong), 0 0 30px var(--glow-gold);
+            transform: scale(1.15);
+        }
+
+        .article-node:hover .node-label { color: var(--gold-pale); }
+        .article-node:hover .node-inner-border { border-color: rgba(224, 200, 142, 0.55); }
+
+        .article-node.active .node-shape {
+            border-color: var(--gold-light);
+            background: rgba(20, 18, 30, 0.95);
+            box-shadow:
+                0 0 30px var(--glow-strong),
+                0 0 60px rgba(201, 169, 110, 0.45),
+                0 0 90px rgba(201, 169, 110, 0.2),
+                inset 0 0 20px rgba(201, 169, 110, 0.12);
+            transform: scale(1.08);
+            animation: activeNodeGlow 2s ease-in-out infinite;
+        }
+
+        .article-node.active .node-icon {
+            color: #fff;
+            text-shadow: 0 0 20px var(--glow-strong), 0 0 40px var(--glow-gold), 0 0 60px rgba(255, 220, 160, 0.6);
+        }
+
+        .article-node.active .node-label {
+            color: var(--gold-light);
+            font-weight: bold;
+        }
+
+        .article-node.node-primary .node-shape {
+            border-color: rgba(201, 169, 110, 0.55);
+            box-shadow:
+                0 0 20px rgba(201, 169, 110, 0.2),
+                0 0 40px rgba(201, 122, 110, 0.1),
+                inset 0 0 10px rgba(201, 169, 110, 0.06);
+        }
+
+        .article-node.node-primary .node-icon {
+            font-size: 1.8rem;
+            color: #e8c88e;
+            text-shadow: 0 0 14px var(--glow-strong), 0 0 28px rgba(201, 122, 110, 0.35);
+            animation: primaryIconWarmth 5s ease-in-out infinite;
+        }
+
+        @keyframes primaryIconWarmth {
+            0%, 100% { text-shadow: 0 0 14px var(--glow-strong), 0 0 28px rgba(201, 122, 110, 0.35); }
+            50% { text-shadow: 0 0 22px var(--glow-strong), 0 0 42px rgba(201, 122, 110, 0.6), 0 0 60px rgba(255, 180, 140, 0.3); }
+        }
+
+        @keyframes activeNodeGlow {
+            0%, 100% {
+                box-shadow: 0 0 30px var(--glow-strong), 0 0 60px rgba(201, 169, 110, 0.45), 0 0 90px rgba(201, 169, 110, 0.2),
+                    inset 0 0 20px rgba(201, 169, 110, 0.12);
+            }
+            50% {
+                box-shadow: 0 0 40px var(--glow-strong), 0 0 75px rgba(201, 169, 110, 0.55), 0 0 110px rgba(201, 169, 110, 0.3),
+                    inset 0 0 28px rgba(201, 169, 110, 0.18);
+            }
+        }
+
+        .article-node.node-empty {
+            cursor: default;
+            opacity: 0.45;
+            pointer-events: none;
+        }
+        .article-node.node-empty .node-shape {
+            border-style: dotted;
+            border-color: rgba(201, 169, 110, 0.2);
+            box-shadow: none;
+        }
+        .article-node.node-empty .node-icon {
+            color: rgba(201, 169, 110, 0.35);
+            text-shadow: none;
+        }
+        .article-node.node-empty .node-label { color: rgba(122, 110, 96, 0.4); }
+        .article-node.node-empty .node-inner-border {
+            border-color: rgba(201, 169, 110, 0.12);
+            animation: none;
+        }
+
+        .article-display-wrapper {
+            width: 100%;
+            max-width: 720px;
+            position: relative;
+            z-index: 2;
+            transition: all var(--transition-smooth);
+        }
+
+        .article-display {
+            background: rgba(13, 18, 37, 0.85);
+            border: 1.5px solid var(--border-gold);
+            border-radius: 2px;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px) scale(0.96);
+            transition: all 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+            position: relative;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(201, 169, 110, 0.08) inset;
+        }
+
+        .article-display.expanded {
+            max-height: 70vh;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            padding: 2.5rem 2.2rem;
+            overflow-y: auto;
+        }
+
+        .article-display.expanded::-webkit-scrollbar { width: 5px; }
+        .article-display.expanded::-webkit-scrollbar-track { background: transparent; }
+        .article-display.expanded::-webkit-scrollbar-thumb {
+            background: rgba(201, 169, 110, 0.3);
+            border-radius: 3px;
+        }
+        .article-display.expanded::-webkit-scrollbar-thumb:hover { background: rgba(201, 169, 110, 0.55); }
+
+        .article-inner { position: relative; z-index: 3; }
+
+        .article-title-display {
+            font-family: var(--font-heading);
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            color: var(--gold-light);
+            letter-spacing: 0.06em;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.25);
+            position: relative;
+            text-shadow: 0 0 15px rgba(201, 169, 110, 0.3);
+        }
+
+        .article-title-display::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            box-shadow: 0 0 8px var(--glow-gold);
+        }
+
+        .article-source {
+            font-family: var(--font-heading);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            margin-bottom: 1.4rem;
+            font-style: italic;
+        }
+
+        .article-body-display {
+            font-family: var(--font-body);
+            font-size: clamp(0.9rem, 1.4vw, 1rem);
+            color: var(--text-secondary);
+            line-height: 1.9;
+            letter-spacing: 0.03em;
+        }
+
+        .article-body-display p { margin-bottom: 1rem; }
+        .article-body-display p:last-child { margin-bottom: 0; }
+
+        /* —— 语录诗句 —— */
+        .verse-block {
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+
+        .verse-line {
+            font-family: var(--font-heading);
+            font-size: clamp(0.95rem, 1.6vw, 1.12rem);
+            color: var(--text-secondary);
+            letter-spacing: 0.06em;
+            line-height: 2.1;
+            margin: 0;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: verseReveal 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+        }
+
+        .verse-line:nth-child(1) { animation-delay: 0.10s; }
+        .verse-line:nth-child(2) { animation-delay: 0.22s; }
+        .verse-line:nth-child(3) { animation-delay: 0.34s; }
+        .verse-line:nth-child(4) { animation-delay: 0.46s; }
+        .verse-line:nth-child(5) { animation-delay: 0.58s; }
+        .verse-line:nth-child(6) { animation-delay: 0.70s; }
+        .verse-line:nth-child(7) { animation-delay: 0.82s; }
+        .verse-line:nth-child(8) { animation-delay: 0.94s; }
+        .verse-line:nth-child(9) { animation-delay: 1.06s; }
+
+        @keyframes verseReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verse-line .verse-only {
+            color: var(--gold-pale);
+            font-style: italic;
+        }
+
+        /* —— "只有爱" 重点标记 —— */
+        .verse-line.verse-love {
+            margin: 1.4rem 0;
+            animation-delay: 0.58s;
+        }
+
+        .verse-line.verse-love .love-mark {
+            display: inline-block;
+            font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+            color: var(--gold-light);
+            letter-spacing: 0.12em;
+            padding: 0.35rem 1.4rem;
+            position: relative;
+            border: 1px solid rgba(224, 200, 142, 0.45);
+            background: rgba(201, 169, 110, 0.07);
+            box-shadow:
+                0 0 20px rgba(224, 200, 142, 0.25),
+                inset 0 0 14px rgba(201, 169, 110, 0.1);
+            text-shadow: 0 0 18px var(--glow-strong), 0 0 36px var(--glow-gold);
+            animation: loveGlow 3.2s ease-in-out infinite;
+        }
+
+        .verse-line.verse-love .love-mark::before,
+        .verse-line.verse-love .love-mark::after {
+            content: '✦';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.6em;
+            color: var(--gold);
+            opacity: 0.8;
+        }
+        .verse-line.verse-love .love-mark::before { left: 0.45rem; }
+        .verse-line.verse-love .love-mark::after { right: 0.45rem; }
+
+        @keyframes loveGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(224, 200, 142, 0.25), inset 0 0 14px rgba(201, 169, 110, 0.1);
+                border-color: rgba(224, 200, 142, 0.45);
+            }
+            50% {
+                box-shadow: 0 0 34px rgba(224, 200, 142, 0.5), 0 0 60px rgba(201, 169, 110, 0.3),
+                    inset 0 0 22px rgba(201, 169, 110, 0.18);
+                border-color: rgba(240, 219, 176, 0.75);
+            }
+        }
+
+        .verse-closing {
+            text-align: center;
+            font-family: var(--font-heading);
+            font-style: italic;
+            color: var(--gold-pale);
+            letter-spacing: 0.08em;
+            margin-top: 1.4rem;
+            opacity: 0;
+            animation: verseReveal 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 1.3s forwards;
+        }
+
+        /* —— 站长点评 —— */
+        .owner-note {
+            margin-top: 2rem;
+            padding: 1.3rem 1.4rem;
+            border: 1px dashed rgba(201, 122, 110, 0.45);
+            background: rgba(201, 122, 110, 0.05);
+            position: relative;
+        }
+
+        .owner-note::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 34px;
+            height: 34px;
+            border-top: 1.5px solid var(--accent-rose);
+            border-left: 1.5px solid var(--accent-rose);
+            opacity: 0.6;
+        }
+        .owner-note::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 34px;
+            height: 34px;
+            border-bottom: 1.5px solid var(--accent-rose);
+            border-right: 1.5px solid var(--accent-rose);
+            opacity: 0.6;
+        }
+
+        .owner-note-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 0.14em;
+            color: var(--accent-rose);
+            border: 1px solid rgba(201, 122, 110, 0.5);
+            padding: 0.15rem 0.7rem;
+            margin-bottom: 0.8rem;
+            font-family: var(--font-heading);
+        }
+
+        .owner-note-body {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.9;
+            letter-spacing: 0.04em;
+        }
+
+        .owner-note-body .note-fractal {
+            color: var(--gold-pale);
+            font-style: italic;
+        }
+
+        .owner-note-disclaimer {
+            margin-top: 0.7rem;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            font-style: italic;
+        }
+
+        /* —— 造物者列表 —— */
+        .creator-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .creator-list li {
+            position: relative;
+            padding: 0.55rem 0 0.55rem 2rem;
+            color: var(--text-secondary);
+            line-height: 1.85;
+            border-bottom: 1px dashed rgba(201, 169, 110, 0.14);
+            opacity: 0;
+            transform: translateX(-8px);
+            animation: listReveal 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+        }
+
+        .creator-list li:last-child { border-bottom: none; }
+
+        .creator-list li::before {
+            content: '◆';
+            position: absolute;
+            left: 0.3rem;
+            top: 0.62rem;
+            font-size: 0.62rem;
+            color: var(--gold);
+            text-shadow: 0 0 8px var(--glow-gold);
+        }
+
+        .creator-list li:nth-child(1) { animation-delay: 0.10s; }
+        .creator-list li:nth-child(2) { animation-delay: 0.20s; }
+        .creator-list li:nth-child(3) { animation-delay: 0.30s; }
+        .creator-list li:nth-child(4) { animation-delay: 0.40s; }
+        .creator-list li:nth-child(5) { animation-delay: 0.50s; }
+        .creator-list li:nth-child(6) { animation-delay: 0.60s; }
+        .creator-list li:nth-child(7) { animation-delay: 0.70s; }
+        .creator-list li:nth-child(8) { animation-delay: 0.80s; }
+
+        @keyframes listReveal {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .creator-list li .item-key {
+            color: var(--gold-pale);
+            font-style: italic;
+        }
+
+        .geo-separator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1.2rem 0;
+            opacity: 0.5;
+        }
+        .geo-separator .sep-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--gold-dark);
+            border-radius: 50%;
+        }
+        .geo-separator .sep-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.4), transparent);
+        }
+
+        .btn-close-article {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            z-index: 10;
+            background: none;
+            border: 1px solid rgba(201, 169, 110, 0.4);
+            color: var(--gold);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all var(--transition-smooth);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            opacity: 0;
+            pointer-events: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .article-display.expanded .btn-close-article {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .btn-close-article:hover {
+            border-color: var(--gold-light);
+            color: #fff;
+            box-shadow: 0 0 16px var(--glow-gold);
+            background: rgba(201, 169, 110, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .footer-hint {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            font-family: var(--font-heading);
+            opacity: 0.6;
+            transition: opacity 0.5s;
+        }
+
+        @media (max-width: 768px) {
+            .main-container { padding: 1.5rem 1rem; }
+            .articles-nav {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .articles-nav::before { display: none; }
+            .article-node { width: 70px; height: 70px; }
+            .node-icon { font-size: 1.3rem; }
+            .node-label { font-size: 0.65rem; bottom: -24px; }
+            .article-display.expanded { padding: 1.8rem 1.2rem; max-height: 65vh; }
+            .btn-close-article { width: 30px; height: 30px; top: 10px; right: 10px; font-size: 0.9rem; }
+            .sacred-geometry-bg { width: 95vmin; height: 95vmin; opacity: 0.2; }
+            .sacred-geometry-bg-2 { width: 80vmin; height: 80vmin; opacity: 0.15; }
+            .verse-line.verse-love .love-mark::before { left: 0.25rem; }
+            .verse-line.verse-love .love-mark::after { right: 0.25rem; }
+            .verse-line.verse-love .love-mark { padding: 0.35rem 1.1rem; }
+        }
+
+        @media (max-width: 420px) {
+            .article-node { width: 56px; height: 56px; }
+            .node-icon { font-size: 1.05rem; }
+            .node-label { font-size: 0.6rem; bottom: -22px; }
+            .articles-nav { gap: 0.7rem; }
+            .article-display.expanded { padding: 1.4rem 1rem; max-height: 60vh; }
+            .btn-close-article { width: 26px; height: 26px; top: 8px; right: 8px; font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="particles-container" id="particlesContainer" aria-hidden="true"></div>
+
+    <div class="sacred-geometry-bg" aria-hidden="true">
+        <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="300" cy="300" r="90" class="geo-circle" />
+            <circle cx="300" cy="210" r="90" class="geo-circle" />
+            <circle cx="378" cy="255" r="90" class="geo-circle" />
+            <circle cx="378" cy="345" r="90" class="geo-circle rose-tint" />
+            <circle cx="300" cy="390" r="90" class="geo-circle" />
+            <circle cx="222" cy="345" r="90" class="geo-circle rose-tint" />
+            <circle cx="222" cy="255" r="90" class="geo-circle" />
+            <circle cx="300" cy="300" r="185" class="geo-circle" style="stroke-dasharray:4 12; opacity:0.5;" />
+            <circle cx="300" cy="300" r="195" class="geo-circle" style="stroke-width:0.4; opacity:0.35;" />
+            <polygon points="300,105 468,202 468,398 300,495 132,398 132,202" class="geo-line" />
+            <line x1="300" y1="105" x2="300" y2="495" class="geo-line" />
+            <line x1="132" y1="202" x2="468" y2="398" class="geo-line" />
+            <line x1="468" y1="202" x2="132" y2="398" class="geo-line" />
+        </svg>
+    </div>
+
+    <div class="sacred-geometry-bg-2" aria-hidden="true">
+        <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="250,60 420,380 80,380" class="geo-line-2" />
+            <polygon points="250,440 420,120 80,120" class="geo-line-2 rose-line" />
+            <circle cx="250" cy="250" r="130" class="geo-line-2" style="stroke-dasharray:6 18;" />
+            <circle cx="250" cy="250" r="80" class="geo-line-2 rose-line" style="stroke-dasharray:2 10; opacity:0.5;" />
+            <circle cx="250" cy="250" r="3" fill="#d4943a" opacity="0.6" />
+        </svg>
+    </div>
+
+    <div class="main-container">
+        <header class="header-section">
+            <div class="header-ornament">
+                <span class="ornament-line"></span>
+                <span class="ornament-diamond"></span>
+                <span class="ornament-line"></span>
+            </div>
+            <h1 class="main-title">终极旅程 · 只有爱</h1>
+            <p class="main-subtitle">— Robert A. Monroe · Ultimate Journey —</p>
+        </header>
+
+        <div class="geo-divider" aria-hidden="true">
+            <span class="hex-dot"></span><span class="hex-dot"></span><span class="hex-dot"></span>
+            <span class="hex-dot"></span><span class="hex-dot"></span><span class="hex-dot"></span>
+            <span class="hex-dot"></span>
+        </div>
+
+        <nav class="articles-nav" id="articlesNav" aria-label="章节导航"></nav>
+
+        <div class="article-display-wrapper">
+            <div class="article-display" id="articleDisplay">
+                <button class="btn-close-article"
+                id="btnCloseArticle"
+                title="收起内容"
+                aria-label="关闭内容">✕</button>
+                <div class="article-inner" id="articleInner"></div>
+            </div>
+        </div>
+
+        <p class="footer-hint" id="footerHint">✦ 点击上方节点 · 聆听「一」的低语 ✦</p>
+    </div>
+
+    <script>
+        (function() {
+            const articlesData = [{
+                id: 'article-love',
+                icon: '♥',
+                label: '只有爱',
+                title: '这些是我们所知的状况',
+                source: '罗伯特·门罗 《Ultimate Journey》 中译本 · 第55页',
+                isPrimary: true,
+                body: `
+                    <div class="verse-block">
+                        <p class="verse-line">没有开始，也没有结束，<span class="verse-only">只有改变。</span></p>
+                        <p class="verse-line">没有老师，也没有学生，<span class="verse-only">只有回想起。</span></p>
+                        <p class="verse-line">没有善，也没有恶，<span class="verse-only">只有表达。</span></p>
+                        <p class="verse-line">没有联合，也没有分享，<span class="verse-only">只有一。</span></p>
+                        <p class="verse-line verse-love">没有喜悦，也没有忧伤，<span class="love-mark">只有爱。</span></p>
+                        <p class="verse-line">没有较大，也没有较小，<span class="verse-only">只有平衡。</span></p>
+                        <p class="verse-line">没有停滞，也没有熵，<span class="verse-only">只有律动。</span></p>
+                        <p class="verse-line">没有清醒，也没有睡眠，<span class="verse-only">只有存在。</span></p>
+                        <p class="verse-line">没有限制，也没有偶然，<span class="verse-only">只有一个计划。</span></p>
+                    </div>
+                    <p class="verse-closing">「这些是我们所知的状况。」</p>
+                    <div class="geo-separator" aria-hidden="true">
+                        <span class="sep-dot"></span><span class="sep-line"></span><span class="sep-dot"></span>
+                    </div>
+                    <div class="owner-note">
+                        <span class="owner-note-tag">✦ 站长点评</span>
+                        <p class="owner-note-body">梦对应现实，<span class="note-fractal">我们对应造物主，我们是造物主的分形。</span></p>
+                        <p class="owner-note-disclaimer">—— 以上为本站站长的个人点评，并非书中原文。</p>
+                    </div>
+                `,
+            }, {
+                id: 'article-creator',
+                icon: '☼',
+                label: '造物者',
+                title: '我们的造物者',
+                source: '罗伯特·门罗 《Ultimate Journey》 中译本 · 第57页',
+                isPrimary: false,
+                body: `
+                    <ul class="creator-list">
+                        <li>远超过<span class="item-key">我们的理解</span>；</li>
+                        <li>是<span class="item-key">持续进行过程的设计者</span>，我们也是过程的一部份；</li>
+                        <li>有个<span class="item-key">目的</span>，是我们无法理解的；</li>
+                        <li>在必要时，会对这过程加以<span class="item-key">调整，微调</span>；</li>
+                        <li>建立<span class="item-key">基本法则</span>，适用于每个人，每个事物；</li>
+                        <li>并不要求<span class="item-key">崇拜、膜拜或认同</span>；</li>
+                        <li>并不<span class="item-key">处罚</span>邪恶和恶行；</li>
+                        <li>并不<span class="item-key">干涉或禁止</span>我们的生命活动。</li>
+                    </ul>
+                `,
+            }, {
+                id: 'article-empty-1',
+                icon: '△',
+                label: '',
+                title: '',
+                body: '',
+                isEmpty: true,
+            }, {
+                id: 'article-empty-2',
+                icon: '◈',
+                label: '',
+                title: '',
+                body: '',
+                isEmpty: true,
+            }];
+
+            const articlesNav = document.getElementById('articlesNav');
+            const articleDisplay = document.getElementById('articleDisplay');
+            const articleInner = document.getElementById('articleInner');
+            const btnCloseArticle = document.getElementById('btnCloseArticle');
+            const footerHint = document.getElementById('footerHint');
+            let currentActiveId = null;
+            let isExpanded = false;
+
+            function createParticles() {
+                const container = document.getElementById('particlesContainer');
+                const count = 40;
+                let html = '';
+                for (let i = 0; i < count; i++) {
+                    const size = Math.random() * 2.5 + 1;
+                    const left = Math.random() * 100;
+                    const animDuration = Math.random() * 18 + 14;
+                    const animDelay = Math.random() * 20;
+                    const animType = Math.random() > 0.5 ? 'floatParticle' : 'floatParticleAlt';
+                    const isRose = Math.random() < 0.3;
+                    const roseClass = isRose ? ' particle-rose' : '';
+                    html += `
+                    <div class="particle${roseClass}"
+                         style="
+                            width:${size}px;
+                            height:${size}px;
+                            left:${left}%;
+                            bottom:-20px;
+                            animation-name:${animType};
+                            animation-duration:${animDuration}s;
+                            animation-delay:${animDelay}s;
+                         "
+                    ></div>`;
+                }
+                container.innerHTML = html;
+            }
+
+            function renderArticleNodes() {
+                let html = '';
+                articlesData.forEach((article) => {
+                    const emptyClass = article.isEmpty ? ' node-empty' : '';
+                    const primaryClass = article.isPrimary ? ' node-primary' : '';
+                    html += `
+                    <div class="article-node${emptyClass}${primaryClass}"
+                         data-article-id="${article.id}"
+                         role="${article.isEmpty ? 'presentation' : 'button'}"
+                         tabindex="${article.isEmpty ? '-1' : '0'}"
+                         aria-label="${article.label || '空白节点'}"
+                         title="${article.label || ''}">
+                        <div class="node-shape"></div>
+                        <div class="node-inner-border"></div>
+                        <span class="node-icon" aria-hidden="true">${article.icon}</span>
+                        <span class="node-label">${article.label}</span>
+                    </div>`;
+                });
+                articlesNav.innerHTML = html;
+
+                const nodes = articlesNav.querySelectorAll('.article-node:not(.node-empty)');
+                nodes.forEach(node => {
+                    node.addEventListener('click', () => {
+                        const articleId = node.getAttribute('data-article-id');
+                        handleNodeClick(articleId);
+                    });
+                    node.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            const articleId = node.getAttribute('data-article-id');
+                            handleNodeClick(articleId);
+                        }
+                    });
+                });
+            }
+
+            function handleNodeClick(articleId) {
+                const article = articlesData.find(a => a.id === articleId);
+                if (!article || article.isEmpty) return;
+
+                if (currentActiveId === articleId && isExpanded) {
+                    collapseArticle();
+                    return;
+                }
+
+                if (currentActiveId === articleId && !isExpanded) {
+                    expandArticle(article);
+                    return;
+                }
+
+                currentActiveId = articleId;
+                updateActiveNode();
+                expandArticle(article);
+            }
+
+            function expandArticle(article) {
+                articleInner.innerHTML = `
+                    <h2 class="article-title-display">${article.title}</h2>
+                    <div class="article-source">${article.source}</div>
+                    <div class="article-body-display">${article.body}</div>
+                `;
+
+                articleDisplay.classList.add('expanded');
+                articleDisplay.scrollTop = 0;
+                isExpanded = true;
+                footerHint.style.opacity = '0';
+                updateActiveNode();
+
+                setTimeout(() => {
+                    articleDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 150);
+            }
+
+            function collapseArticle() {
+                articleDisplay.classList.remove('expanded');
+                isExpanded = false;
+                footerHint.style.opacity = '0.6';
+                updateActiveNode();
+            }
+
+            function updateActiveNode() {
+                const allNodes = articlesNav.querySelectorAll('.article-node:not(.node-empty)');
+                allNodes.forEach(node => {
+                    const nodeId = node.getAttribute('data-article-id');
+                    if (nodeId === currentActiveId && isExpanded) {
+                        node.classList.add('active');
+                    } else {
+                        node.classList.remove('active');
+                    }
+                });
+            }
+
+            btnCloseArticle.addEventListener('click', () => {
+                collapseArticle();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && isExpanded) {
+                    collapseArticle();
+                }
+            });
+
+            function init() {
+                createParticles();
+                renderArticleNodes();
+                footerHint.style.opacity = '0.6';
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+            console.log('%c♥ 终极旅程 · 只有爱 已就绪 ♥',
+                'color:#e0c88e; font-size:1.2em; letter-spacing:0.05em;');
+        })();
+    </script>
+</body>
+</html>
