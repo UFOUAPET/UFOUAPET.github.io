@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d15">
+  <meta name="description" content="从科学家的宇宙观、意识研究与未知现象进入同一个问题：人类怎样理解看不见的世界。">
+  <title>神秘学与科学之眼 | 主页</title>
+  <style>
+    /* 单文件静态首页；无需构建、字体服务、框架或 CDN。 */
+    :root {
+      color-scheme: dark;
+      --bg: #080d15;
+      --text: #f2ede3;
+      --muted: #a1adba;
+      --gold: #e3c487;
+      --teal: #79d4ca;
+      --violet: #b3a1e4;
+      --green: #a2cdaa;
+      --line: rgba(227, 196, 135, .18);
+      --stage-size: 40rem;
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: var(--bg); }
+    body {
+      margin: 0;
+      min-width: 280px;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 50% 48%, rgba(27, 73, 76, .22), transparent 45%),
+        radial-gradient(ellipse at 0 0, rgba(28, 65, 73, .18), transparent 48%),
+        radial-gradient(ellipse at 100% 75%, rgba(78, 47, 65, .12), transparent 42%),
+        var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: .15;
+      background-image:
+        repeating-linear-gradient(0deg, transparent 0 79px, rgba(143, 177, 183, .16) 79px 80px),
+        repeating-linear-gradient(90deg, transparent 0 79px, rgba(143, 177, 183, .16) 79px 80px);
+      mask-image: radial-gradient(ellipse at center, black, transparent 73%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 73%);
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .skip-link {
+      position: fixed;
+      top: .75rem;
+      left: .75rem;
+      z-index: 20;
+      padding: .75rem 1rem;
+      border-radius: .4rem;
+      background: var(--gold);
+      color: #101821;
+      transform: translateY(-200%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .ambient-layer, .word-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      contain: strict;
+    }
+    .star-particle {
+      position: absolute;
+      border-radius: 50%;
+      color: var(--particle-color, var(--gold));
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+      opacity: .32;
+      animation: starTwinkle var(--twinkle-dur, 6s) ease-in-out infinite;
+      animation-delay: var(--twinkle-delay, 0s);
+    }
+    .float-word {
+      position: absolute;
+      top: 0;
+      white-space: nowrap;
+      color: #becdc9;
+      font-family: Georgia, "Microsoft YaHei", serif;
+      font-size: .75rem;
+      letter-spacing: .08em;
+      opacity: 0;
+      animation: floatWord var(--float-dur, 40s) linear infinite;
+      animation-delay: var(--float-delay, 0s);
+    }
+    .page-shell {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      width: min(78rem, 100%);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+    .masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      min-height: 5rem;
+      border-bottom: 1px solid rgba(227, 196, 135, .12);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: .8rem;
+      color: #d2c7af;
+      font-size: .72rem;
+      letter-spacing: .22em;
+    }
+    .brand svg { width: 2.15rem; height: 1.55rem; }
+    .masthead-note { margin: 0; color: #84959f; font-size: .69rem; letter-spacing: .15em; }
+    .site-hero {
+      position: relative;
+      display: grid;
+      justify-items: center;
+      gap: 1.15rem;
+      padding: 2.7rem 0 0;
+      text-align: center;
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      margin: 0;
+      color: var(--gold);
+      font: .61rem/1.5 Georgia, serif;
+      letter-spacing: .32em;
+    }
+    .eyebrow::before, .eyebrow::after {
+      content: "";
+      width: 1.6rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #8c7856);
+    }
+    .eyebrow::after { transform: rotate(180deg); }
+    h1 {
+      margin: 0;
+      font-family: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+      font-size: clamp(1.75rem, 4vw, 3.05rem);
+      font-weight: 500;
+      line-height: 1.35;
+      letter-spacing: .11em;
+      text-indent: .11em;
+      color: #f1e8d7;
+      text-shadow: 0 2px 22px rgba(224, 192, 127, .14);
+    }
+    .lead {
+      max-width: 36rem;
+      margin: 0;
+      color: var(--muted);
+      font-size: .84rem;
+      line-height: 1.95;
+      letter-spacing: .06em;
+      text-wrap: pretty;
+    }
+    .navigator { position: relative; width: 100%; margin: .25rem auto 0; outline: none; }
+    .stage-wrap { position: relative; display: grid; place-items: center; }
+    .stage {
+      position: relative;
+      width: min(var(--stage-size), 100%);
+      aspect-ratio: 1;
+      isolation: isolate;
+      --shift-x: 0px;
+      --shift-y: 0px;
+    }
+    .stage::before {
+      content: "";
+      position: absolute;
+      inset: 20% 8% 9%;
+      z-index: -1;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(64, 130, 128, .12), rgba(131, 103, 49, .035) 42%, transparent 68%);
+      pointer-events: none;
+    }
+    .stage::after {
+      content: "";
+      position: absolute;
+      bottom: 9%;
+      left: 22%;
+      width: 56%;
+      height: 4%;
+      z-index: -1;
+      border-radius: 50%;
+      background: #000;
+      filter: blur(13px);
+      opacity: .6;
+      pointer-events: none;
+    }
+    .sigil {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .rear-geometry {
+      transform: translate(calc(var(--shift-x) * -.6), calc(var(--shift-y) * -.6));
+      transition: transform 550ms ease-out;
+    }
+    .front-geometry {
+      transform: translate(var(--shift-x), var(--shift-y));
+      transition: transform 550ms ease-out;
+    }
+    .geometry-breathe { animation: geometryBreathe 8s ease-in-out infinite; }
+    .core-halo { animation: coreBreathe 6s ease-in-out infinite; transform-origin: 500px 565px; }
+    .light-point { animation: starTwinkle 5s ease-in-out infinite; }
+    .node {
+      --mark: var(--gold);
+      position: absolute;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      min-height: 4rem;
+      width: max-content;
+      max-width: 14rem;
+      padding: .85rem 1.05rem;
+      border: 1px solid rgba(215, 202, 167, .25);
+      border-radius: .9rem;
+      background: linear-gradient(135deg, rgba(31, 43, 50, .96), rgba(12, 20, 29, .97) 65%);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(243, 234, 207, .09), 0 0 0 4px rgba(7, 12, 19, .35);
+      transform: translate(-50%, -50%);
+      transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+    .node::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      box-shadow: 0 0 24px rgba(218, 190, 127, .12);
+      transition: opacity .25s;
+    }
+    .node:hover { border-color: var(--mark); background: linear-gradient(135deg, #293840, #13202b); }
+    .node:hover::after { opacity: 1; }
+    .node:focus-visible { outline: 2px solid var(--mark); outline-offset: 6px; border-color: var(--mark); }
+    .node-symbol {
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      width: 1.8rem;
+      height: 1.8rem;
+      color: var(--mark);
+      border: 1px solid rgba(186, 196, 196, .2);
+      border-radius: 50%;
+    }
+    .node-symbol svg { width: 1.1rem; height: 1.1rem; }
+    .node-label { display: grid; gap: .37rem; }
+    .node-title { font-size: .91rem; font-weight: 600; line-height: 1.3; letter-spacing: .045em; white-space: nowrap; }
+    .node-subtitle { color: #a8b4bd; font-size: .6rem; letter-spacing: .12em; line-height: 1.3; white-space: nowrap; }
+    .node-arrow { margin-left: .3rem; color: var(--mark); font-size: .88rem; opacity: .6; transition: opacity .2s; }
+    .node:hover .node-arrow { opacity: 1; }
+    .node-top { top: 13%; left: 50%; --mark: var(--teal); }
+    .node-left { top: 79%; left: 14%; --mark: var(--violet); }
+    .node-right { top: 79%; left: 86%; --mark: var(--green); }
+    .node-center {
+      top: 56.5%;
+      left: 50%;
+      justify-content: center;
+      gap: .75rem;
+      padding: .9rem 1.55rem;
+      min-height: 4rem;
+      border-color: rgba(236, 204, 145, .68);
+      border-radius: 3rem;
+      background: linear-gradient(130deg, #645338 0%, #2e3f3e 50%, #1a2d32 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 243, 216, .28), 0 10px 25px rgba(0, 0, 0, .45), 0 0 32px rgba(223, 184, 105, .14);
+    }
+    .node-center .node-title { color: #fff0ce; font-size: 1rem; letter-spacing: .2em; }
+    .node-center .node-subtitle { color: #d0c8b4; font: .55rem/1.4 Georgia, serif; letter-spacing: .2em; }
+    .node-center .node-symbol { width: 1.65rem; height: 1.65rem; border: 0; }
+    .node-center:hover { background: linear-gradient(130deg, #7b6440, #354f4b 60%, #20363c); }
+    .side-note {
+      position: absolute;
+      top: 46%;
+      color: #748893;
+      font: .6rem/1.5 Georgia, serif;
+      letter-spacing: .24em;
+      writing-mode: vertical-rl;
+    }
+    .side-note-left { left: 1.5rem; transform: rotate(180deg); }
+    .side-note-right { right: 1.5rem; }
+    .stage-caption {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .85rem;
+      position: relative;
+      margin: -1.1rem 0 1.6rem;
+      color: #96a7ad;
+      font-size: .67rem;
+      letter-spacing: .22em;
+      text-align: center;
+    }
+    .stage-caption::before, .stage-caption::after {
+      content: "";
+      width: 1.8rem;
+      height: 1px;
+      background: rgba(195, 174, 130, .32);
+    }
+    .site-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: auto;
+      padding: 1.2rem 0 1.4rem;
+      border-top: 1px solid rgba(227, 196, 135, .12);
+      color: #85949f;
+      font-size: .65rem;
+      letter-spacing: .1em;
+    }
+    .site-footer p { margin: 0; line-height: 1.8; }
+    .footer-motto { color: #c0b69e; }
+    .motion-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      min-height: 44px;
+      padding: .45rem .75rem;
+      color: #b2bec4;
+      background: rgba(22, 35, 43, .55);
+      border: 1px solid rgba(161, 175, 182, .22);
+      border-radius: 2rem;
+      font-size: .67rem;
+      cursor: pointer;
+    }
+    .motion-toggle[hidden] { display: none; }
+    .motion-toggle:hover { border-color: #98845e; color: #ecdbb7; }
+    .motion-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+    .motion-toggle svg { width: .85rem; height: .85rem; }
+    .motion-toggle[aria-pressed="true"] .pause-icon, .motion-toggle[aria-pressed="false"] .play-icon { display: none; }
+    @keyframes starTwinkle { 0%, 100% { opacity: .22; } 50% { opacity: .72; } }
+    @keyframes geometryBreathe { 0%, 100% { opacity: .55; } 50% { opacity: .85; } }
+    @keyframes coreBreathe { 0%, 100% { opacity: .6; transform: scale(.97); } 50% { opacity: .95; transform: scale(1.04); } }
+    @keyframes floatWord {
+      0% { transform: translateY(108vh); opacity: 0; }
+      15%, 80% { opacity: var(--word-opacity, .12); }
+      100% { transform: translateY(-10vh); opacity: 0; }
+    }
+    /* 暂停装饰动效；导航不依赖 JS，禁用 JS 仍可正常跳转。 */
+    body.motion-paused *, body.motion-paused *::before, body.motion-paused *::after { animation-play-state: paused !important; }
+    body.motion-paused .rear-geometry, body.motion-paused .front-geometry { transform: none; transition: none; }
+    @media (min-width: 1600px) and (min-height: 1000px) {
+      :root { --stage-size: 45rem; }
+      .site-hero { padding-top: 3.5rem; }
+    }
+    @media (max-width: 1000px) {
+      .page-shell { padding: 0 2rem; }
+      .side-note { display: none; }
+      :root { --stage-size: 36rem; }
+    }
+    @media (max-width: 700px) {
+      .page-shell { padding: 0 1.25rem; }
+      .masthead { min-height: 4.2rem; }
+      .brand { font-size: .63rem; letter-spacing: .15em; }
+      .masthead-note { font-size: .59rem; letter-spacing: .06em; }
+      .site-hero { padding-top: 2.5rem; gap: .9rem; }
+      .lead { max-width: 28rem; font-size: .77rem; }
+      .navigator { margin-top: 1.4rem; }
+      .node { gap: .5rem; min-height: 3.35rem; padding: .65rem .8rem; border-radius: .7rem; }
+      .node-title { font-size: .81rem; }
+      .node-subtitle { font-size: .54rem; letter-spacing: .05em; }
+      .node-symbol { width: 1.45rem; height: 1.45rem; }
+      .node-symbol svg { width: .9rem; height: .9rem; }
+      .node-arrow { display: none; }
+      .node-left { left: 18%; }
+      .node-right { left: 82%; }
+      .node-center { border-radius: 3rem; padding: .7rem 1rem; }
+      .node-center .node-title { font-size: .91rem; }
+      .stage-caption { margin-top: 0; margin-bottom: 2rem; font-size: .61rem; }
+      .site-footer { font-size: .59rem; }
+    }
+    @media (max-width: 420px) {
+      .page-shell { padding: 0 .9rem; }
+      .brand { gap: .45rem; }
+      .brand svg { width: 1.7rem; }
+      .masthead-note { letter-spacing: 0; }
+      h1 { font-size: clamp(1.3rem, 6.7vw, 1.78rem); letter-spacing: .06em; }
+      .eyebrow { font-size: .52rem; gap: .5rem; letter-spacing: .22em; }
+      .node { gap: .4rem; padding: .62rem .65rem; }
+      .node-left { left: 20%; }
+      .node-right { left: 80%; }
+      .node-left .node-symbol, .node-right .node-symbol { display: none; }
+      .node-title { font-size: .76rem; }
+      .node-center { padding: .62rem .8rem; }
+      .node-center .node-symbol { width: 1.1rem; }
+      .stage-caption { letter-spacing: .12em; font-size: .57rem; }
+      .footer-detail { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      .rear-geometry, .front-geometry { transform: none !important; }
+      .float-word { display: none; }
+    }
+    @media (forced-colors: active) {
+      .node, .motion-toggle { border: 1px solid ButtonText; }
+      .sigil, .ambient-layer, .word-layer { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#navigation">跳至主要入口</a>
+  <div id="star-bg-container" class="ambient-layer" aria-hidden="true"></div>
+  <div id="word-bg-container" class="word-layer" aria-hidden="true"></div>
+
+  <div class="page-shell">
+    <header class="masthead">
+      <div class="brand">
+        <svg viewBox="0 0 44 30" fill="none" aria-hidden="true"><path d="M2 15Q22-6 42 15Q22 36 2 15Z" stroke="#d8be88" stroke-width="1.1"/><circle cx="22" cy="15" r="7" stroke="#89b8b2"/><circle cx="22" cy="15" r="2" fill="#e3c487"/><path d="M22 0v5M22 25v5" stroke="#d8be88" stroke-opacity=".5"/></svg>
+        <span>神秘学与科学之眼</span>
+      </div>
+      <p class="masthead-note">好奇 · 探索 · 思辨</p>
+    </header>
+
+    <main>
+      <div class="site-hero">
+        <p class="eyebrow" lang="en">THE SEEN &amp; THE UNSEEN</p>
+        <h1>神秘学与科学之眼</h1>
+        <p class="lead">从科学家的宇宙观、意识研究与未知现象进入同一个问题：<br class="desktop-break">人类怎样理解看不见的世界。</p>
+      </div>
+
+      <nav class="navigator" id="navigation" aria-label="主要入口" tabindex="-1">
+        <span class="side-note side-note-left" aria-hidden="true">AS ABOVE · SO BELOW</span>
+        <span class="side-note side-note-right" aria-hidden="true">AT THE EDGE OF THE KNOWN</span>
+        <div class="stage-wrap">
+          <div class="stage" id="geometry-stage">
+            <!-- 分层静态 SVG：远景星盘 / 后部骨架 / 晶体切面 / 前部金属棱线。
+                 通过遮挡、投影与明暗表现体积，不需要 WebGL 或 3D 模型文件。 -->
+            <svg class="sigil" viewBox="0 0 1000 1000" fill="none" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="orbitMetal" x1="140" y1="100" x2="850" y2="950" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#537a78" stop-opacity=".35"/>
+                  <stop offset=".3" stop-color="#d7bd84" stop-opacity=".75"/>
+                  <stop offset=".6" stop-color="#718b85" stop-opacity=".22"/>
+                  <stop offset="1" stop-color="#c6a777" stop-opacity=".48"/>
+                </linearGradient>
+                <linearGradient id="goldEdge" x1="170" y1="800" x2="695" y2="170" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#817050"/>
+                  <stop offset=".24" stop-color="#e3c487"/>
+                  <stop offset=".5" stop-color="#fff0bf"/>
+                  <stop offset=".72" stop-color="#aa8750"/>
+                  <stop offset="1" stop-color="#f4dfa4"/>
+                </linearGradient>
+                <linearGradient id="edgeCool" x1="500" y1="130" x2="140" y2="790" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#c0ede0"/><stop offset=".4" stop-color="#75bfb4"/><stop offset="1" stop-color="#c0a2d3"/>
+                </linearGradient>
+                <linearGradient id="faceLeft" x1="210" y1="450" x2="590" y2="610" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#65bcb0" stop-opacity=".03"/>
+                  <stop offset="1" stop-color="#74c4b2" stop-opacity=".13"/>
+                </linearGradient>
+                <linearGradient id="faceRight" x1="770" y1="650" x2="470" y2="300" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#d9b669" stop-opacity=".1"/>
+                  <stop offset="1" stop-color="#e9d3a1" stop-opacity=".015"/>
+                </linearGradient>
+                <linearGradient id="faceBase" x1="500" y1="565" x2="500" y2="790" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#bfcbb9" stop-opacity=".12"/><stop offset="1" stop-color="#8691b8" stop-opacity=".015"/>
+                </linearGradient>
+                <radialGradient id="coreLight">
+                  <stop stop-color="#ffe3a2" stop-opacity=".25"/>
+                  <stop offset=".32" stop-color="#b8c49b" stop-opacity=".12"/>
+                  <stop offset="1" stop-color="#7bc7b6" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="pearlLight" cx="32%" cy="26%" r="75%">
+                  <stop stop-color="#fffdf2"/><stop offset=".28" stop-color="#e6d5a5"/><stop offset=".65" stop-color="#a28d5f"/><stop offset="1" stop-color="#3e514f"/>
+                </radialGradient>
+                <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
+                  <feGaussianBlur stdDeviation="3.5" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <filter id="structureShadow" x="-30%" y="-30%" width="160%" height="170%" color-interpolation-filters="sRGB">
+                  <feDropShadow dx="0" dy="13" stdDeviation="11" flood-color="#00070d" flood-opacity=".75"/>
+                </filter>
+              </defs>
+
+              <!-- 远景：仪器刻度与扁椭圆轨道。 -->
+              <g class="rear-geometry">
+                <circle cx="500" cy="500" r="432" stroke="url(#orbitMetal)" stroke-width="1"/>
+                <circle cx="500" cy="500" r="418" stroke="#8b957c" stroke-width="5" stroke-dasharray="1 23.32" opacity=".32"/>
+                <circle cx="500" cy="500" r="398" stroke="#98aaa0" stroke-width=".65" opacity=".14"/>
+                <path d="M500 58V84M916 500H942M500 916V942M58 500H84" stroke="#d3bc8b" stroke-width="1.2" opacity=".6"/>
+                <path d="M194 194L209 209M791 209L806 194M791 791L806 806M194 806L209 791" stroke="#87aaa3" opacity=".5"/>
+                <ellipse cx="500" cy="567" rx="377" ry="162" transform="rotate(-29 500 567)" stroke="url(#orbitMetal)" stroke-width="1.1"/>
+                <ellipse cx="500" cy="567" rx="377" ry="162" transform="rotate(29 500 567)" stroke="url(#orbitMetal)" stroke-width="1.1"/>
+                <ellipse cx="500" cy="832" rx="251" ry="29" stroke="#7caa9c" stroke-opacity=".12"/>
+                <path d="M251 832H749" stroke="#7caa9c" stroke-opacity=".12"/>
+                <g fill="#bca779" font-family="Georgia, serif" font-size="13" letter-spacing="4" opacity=".6">
+                  <text x="500" y="48" text-anchor="middle">I</text>
+                  <text x="58" y="514" text-anchor="middle">II</text>
+                  <text x="945" y="514" text-anchor="middle">III</text>
+                </g>
+              </g>
+
+              <!-- 后侧三角与纵深连接：和前侧错位形成厚度。 -->
+              <g stroke="#658c87" stroke-width="1" opacity=".44">
+                <path d="M500 181L185 821H815Z"/>
+                <path d="M500 130V181M140 790L185 821M860 790L815 821" stroke="#c2af83"/>
+                <path d="M500 181V605L185 821M500 605L815 821" stroke-dasharray="4 9"/>
+              </g>
+
+              <!-- 生命之花保留原始母题，弱化后侧线条，避免平面线条拥挤。 -->
+              <g class="geometry-breathe" stroke-width="1">
+                <circle cx="500" cy="565" r="150" stroke="#d1bc85" stroke-opacity=".62"/>
+                <circle cx="500" cy="415" r="150" stroke="#80b8aa" stroke-opacity=".45"/>
+                <circle cx="500" cy="715" r="150" stroke="#c1a17d" stroke-opacity=".38"/>
+                <circle cx="370.1" cy="490" r="150" stroke="#a6a3c3" stroke-opacity=".44"/>
+                <circle cx="629.9" cy="490" r="150" stroke="#8cae94" stroke-opacity=".44"/>
+                <circle cx="370.1" cy="640" r="150" stroke="#c3af82" stroke-opacity=".4"/>
+                <circle cx="629.9" cy="640" r="150" stroke="#7eafa6" stroke-opacity=".4"/>
+                <path d="M500 265L760 415V715L500 865L240 715V415Z" stroke="#d1bc85" stroke-opacity=".4"/>
+                <path d="M500 265L240 715H760ZM500 865L240 415H760Z" stroke="#8cb6a8" stroke-opacity=".35"/>
+              </g>
+
+              <!-- 前景：半透明切面、内外双棱线与轻投影。 -->
+              <g class="front-geometry">
+                <g filter="url(#structureShadow)">
+                  <path d="M500 130L140 790L500 565Z" fill="url(#faceLeft)"/>
+                  <path d="M500 130L860 790L500 565Z" fill="url(#faceRight)"/>
+                  <path d="M140 790H860L500 565Z" fill="url(#faceBase)"/>
+                  <path d="M500 130L140 790H860Z" stroke="url(#goldEdge)" stroke-width="3" stroke-linejoin="round"/>
+                  <path d="M500 150L158 780H842Z" stroke="#d9c391" stroke-opacity=".25" stroke-width=".8"/>
+                  <path d="M500 130L140 790" stroke="url(#edgeCool)" stroke-width="1.4"/>
+                  <path d="M500 130V565L140 790M500 565L860 790" stroke="url(#goldEdge)" stroke-opacity=".6" stroke-width="1.2"/>
+                  <path d="M500 153V537" stroke="#b6d3be" stroke-opacity=".55" stroke-width=".8" stroke-dasharray="2 10"/>
+                </g>
+                <!-- 棱线局部高光，不对整个画面施加重模糊。 -->
+                <g filter="url(#softGlow)" stroke-linecap="round">
+                  <path d="M486 156L440 241" stroke="#d4eee0" stroke-width="2" opacity=".75"/>
+                  <path d="M235 790H365" stroke="#efd4a0" stroke-width="1.8" opacity=".65"/>
+                  <path d="M791 664L836 746" stroke="#e9d3a3" stroke-width="1.8" opacity=".65"/>
+                </g>
+                <g class="core-halo">
+                  <circle cx="500" cy="565" r="154" fill="url(#coreLight)"/>
+                  <circle cx="500" cy="565" r="82" stroke="#ead099" stroke-opacity=".5" stroke-width=".8"/>
+                  <circle cx="500" cy="565" r="94" stroke="#9dc2ae" stroke-opacity=".27" stroke-width=".8" stroke-dasharray="2 9"/>
+                </g>
+                <g fill="url(#pearlLight)" stroke="#f8e1b1" stroke-width=".5" filter="url(#softGlow)">
+                  <circle cx="500" cy="130" r="6"/><circle cx="140" cy="790" r="6"/><circle cx="860" cy="790" r="6"/>
+                  <circle cx="500" cy="565" r="9"/>
+                </g>
+              </g>
+              <g fill="#d7c89f">
+                <circle class="light-point" cx="284" cy="201" r="2"/>
+                <circle class="light-point" cx="849" cy="404" r="2" style="animation-delay:-2s"/>
+                <circle class="light-point" cx="641" cy="903" r="1.8" style="animation-delay:-3s"/>
+              </g>
+            </svg>
+
+            <!-- 保留原有四个相对链接；目标 HTML 文件请与 index.html 放在同一目录。 -->
+            <a href="introduce1.html" class="node node-top">
+              <span class="node-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="12" rx="10" ry="4" stroke="currentColor" transform="rotate(-35 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" stroke="currentColor" transform="rotate(35 12 12)"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></span>
+              <span class="node-label"><span class="node-title">爱因斯坦</span><span class="node-subtitle">宇宙与秩序</span></span>
+              <span class="node-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a href="introduce2.html" class="node node-left">
+              <span class="node-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L21 7V17L12 22L3 17V7Z" stroke="currentColor"/><path d="M12 2V22M3 7L21 17M21 7L3 17" stroke="currentColor" stroke-opacity=".65"/></svg></span>
+              <span class="node-label"><span class="node-title">罗伯特·比格罗</span><span class="node-subtitle">意识与未知</span></span>
+              <span class="node-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a href="introduce3.html" class="node node-right">
+              <span class="node-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-opacity=".7"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></span>
+              <span class="node-label"><span class="node-title">罗伯特·门罗</span><span class="node-subtitle">意识的边界</span></span>
+              <span class="node-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a href="homepage.html" class="node node-center">
+              <span class="node-symbol" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M1 12Q12-1 23 12Q12 25 1 12Z" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="12" r="4" stroke="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg></span>
+              <span class="node-label"><span class="node-title">主页</span><span class="node-subtitle" lang="en">ENTER THE EYE</span></span>
+              <span class="node-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+        <p class="stage-caption">选择一个入口，开启你的探索</p>
+      </nav>
+    </main>
+
+    <footer class="site-footer">
+      <p><span class="footer-motto">保持好奇 · 独立思考</span><span class="footer-detail">&nbsp; / &nbsp;探索未知，不止于已知</span></p>
+      <button class="motion-toggle" id="motion-toggle" type="button" aria-label="暂停装饰动效" aria-pressed="false" hidden>
+        <svg class="pause-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 3V13M11 3V13" stroke="currentColor" stroke-width="1.5"/></svg>
+        <svg class="play-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 3L12 8L5 13Z" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span id="motion-label">暂停动效</span>
+      </button>
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+      const starContainer = document.getElementById("star-bg-container");
+      const wordContainer = document.getElementById("word-bg-container");
+      const stage = document.getElementById("geometry-stage");
+      const toggle = document.getElementById("motion-toggle");
+      const label = document.getElementById("motion-label");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+      const smallScreen = window.matchMedia("(max-width: 640px)");
+      const preferenceKey = "eye-home-motion-paused";
+      let userPaused = false;
+      let frame = 0;
+      let pointerX = 0;
+      let pointerY = 0;
+      try { userPaused = window.localStorage.getItem(preferenceKey) === "true"; } catch (_) { /* 隐私模式下保持可用。 */ }
+
+      const random = (min, max) => min + Math.random() * (max - min);
+      const colors = ["#d4ba82", "#7fbeb3", "#ad9acb", "#9eafbc"];
+      const stars = document.createDocumentFragment();
+      const wordsFragment = document.createDocumentFragment();
+      const words = ["爱", "Love", "Amour", "Liebe", "Amor", "Любовь", "حب", "사랑", "愛", "Prema", "Cinta", "Kärlek", "Liefde", "Amore", "Pyaar", "Mahal", "◇", "△", "▽", "◎"];
+
+      for (let i = 0, count = smallScreen.matches ? 28 : 54; i < count; i += 1) {
+        const star = document.createElement("span");
+        const size = random(1, 2.4);
+        star.className = "star-particle";
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${random(0, 100)}%`;
+        star.style.top = `${random(0, 100)}%`;
+        star.style.setProperty("--particle-color", colors[i % colors.length]);
+        star.style.setProperty("--twinkle-dur", `${random(4, 9)}s`);
+        star.style.setProperty("--twinkle-delay", `${random(-10, 0)}s`);
+        stars.appendChild(star);
+      }
+      starContainer.appendChild(stars);
+
+      for (let i = 0, count = smallScreen.matches ? 12 : 24; i < count; i += 1) {
+        const word = document.createElement("span");
+        word.className = "float-word";
+        word.textContent = words[Math.floor(Math.random() * words.length)];
+        /* 文字主要留在两侧，避免穿过标题与导航。 */
+        word.style.left = `${i % 2 === 0 ? random(1, 20) : random(80, 95)}%`;
+        word.style.setProperty("--float-dur", `${random(32, 58)}s`);
+        word.style.setProperty("--float-delay", `${random(-58, 0)}s`);
+        word.style.setProperty("--word-opacity", `${random(.06, .15)}`);
+        wordsFragment.appendChild(word);
+      }
+      wordContainer.appendChild(wordsFragment);
+
+      function resetDepth() {
+        if (frame) window.cancelAnimationFrame(frame);
+        frame = 0;
+        stage.style.setProperty("--shift-x", "0px");
+        stage.style.setProperty("--shift-y", "0px");
+      }
+      function motionAllowed() { return !userPaused && !reducedMotion.matches && !document.hidden; }
+      function syncMotion() {
+        const systemPaused = reducedMotion.matches;
+        const paused = userPaused || systemPaused;
+        document.body.classList.toggle("motion-paused", paused || document.hidden);
+        toggle.setAttribute("aria-pressed", String(paused));
+        toggle.setAttribute("aria-label", paused ? "开启动效" : "暂停装饰动效");
+        label.textContent = systemPaused ? "已减少动效" : userPaused ? "开启动效" : "暂停动效";
+        toggle.disabled = systemPaused;
+        toggle.title = systemPaused ? "已遵循系统的减少动态效果设置" : "只控制装饰动效，不影响页面跳转";
+        if (!motionAllowed()) resetDepth();
+      }
+      toggle.hidden = false;
+      toggle.addEventListener("click", () => {
+        userPaused = !userPaused;
+        try { window.localStorage.setItem(preferenceKey, String(userPaused)); } catch (_) { /* 存储被禁用不影响按钮。 */ }
+        syncMotion();
+      });
+      if (typeof reducedMotion.addEventListener === "function") {
+        reducedMotion.addEventListener("change", syncMotion);
+        finePointer.addEventListener("change", resetDepth);
+      } else {
+        reducedMotion.addListener(syncMotion);
+        finePointer.addListener(resetDepth);
+      }
+      document.addEventListener("visibilitychange", syncMotion);
+      /* 仅装饰层轻微错位；点击区域保持固定，触屏不启用。 */
+      stage.addEventListener("pointermove", (event) => {
+        if (!motionAllowed() || !finePointer.matches) return;
+        const rect = stage.getBoundingClientRect();
+        pointerX = (event.clientX - rect.left) / rect.width - .5;
+        pointerY = (event.clientY - rect.top) / rect.height - .5;
+        if (frame) return;
+        frame = window.requestAnimationFrame(() => {
+          stage.style.setProperty("--shift-x", `${(pointerX * 7).toFixed(2)}px`);
+          stage.style.setProperty("--shift-y", `${(pointerY * 7).toFixed(2)}px`);
+          frame = 0;
+        });
+      }, { passive: true });
+      stage.addEventListener("pointerleave", resetDepth);
+      stage.addEventListener("pointercancel", resetDepth);
+      window.addEventListener("blur", resetDepth);
+      syncMotion();
+    })();
+  </script>
+</body>
+</html>
